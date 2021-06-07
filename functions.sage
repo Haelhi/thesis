@@ -1,3 +1,4 @@
+from recip import *
 from itertools import combinations
 
 # ----------------------- OLD METHOD USING CLASS NUMBER -------------------------
@@ -86,7 +87,8 @@ def construct_Kr(quartic):
                     if dKrplus % dk == 0:
                         kKrplus.<y> = Krplus.extension(k.polynomial())
                         Kr.<z> = kKrplus.absolute_field()
-                        Kr_list.append([Kr.polynomial(),k.polynomial(),Krplus.class_number()])
+                        if check_isomorphic_K_in_list (Kr,Kr_list) == True:
+                            Kr_list.append([Kr.polynomial(),k.polynomial(),Krplus.class_number()])
             else:
                 prime_combos = list(combinations(kprimes,i))
                 for p in prime_combos:
@@ -98,7 +100,8 @@ def construct_Kr(quartic):
                     if dKrplus % dk == 0:
                         kKrplus.<y> = Krplus.extension(k.polynomial())
                         Kr.<z> = kKrplus.absolute_field()
-                        Kr_list.append([Kr.polynomial(),k.polynomial(),Krplus.class_number()])
+                        if check_isomorphic_K_in_list (Kr,Kr_list) == True:
+                            Kr_list.append([Kr.polynomial(),k.polynomial(),Krplus.class_number()])
     return Kr_list
 
 # Can this be made more efficient with isomorphism check?
@@ -164,8 +167,6 @@ def check_isomorphic_K_in_list(K,list_sextic):
                 break
     if check_isom == 0:
         return "True"
-    else:
-        check_isom = 0
     return "False"
 # ----------------------- CM CLASS NUMBER ONE FUNCTION -------------------------
 # Function test_CM_cl_nr_one_with_class_group: test if K is a CM-class number one field
@@ -235,5 +236,4 @@ def K_cm_clno_one_list(K_list):
             hKrstar = hKr/hKrplus
             hk = k.class_number()
             list_CM_one.append([K.polynomial(),hK,hk,hKrstar])
-            print([K.polynomial(),hK,hk,hKr])
     return(list_CM_one)
