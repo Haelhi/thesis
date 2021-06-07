@@ -1,4 +1,3 @@
-from recip import *
 from itertools import combinations
 
 # ----------------------- OLD METHOD USING CLASS NUMBER -------------------------
