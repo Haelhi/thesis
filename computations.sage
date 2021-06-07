@@ -1,3 +1,5 @@
+load("https://bitbucket.org/mstreng/recip/raw/master/recip_online.sage")
+
 from itertools import combinations
 
 load('functions.sage')
