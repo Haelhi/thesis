@@ -28,4 +28,5 @@ Kr_list = construct_Kr(quartic)
 
 K_list = compute_K_from_Kr_sub(Kr_list)
 K_CM_one = K_cm_clno_one_list(K_list)
-print(f'[{K_CM_one[0]}', *K_CM_one[1:-1], f'{K_CM_one[-1]}]', sep = ',\n')
+print(K_CM_one)
+# print(f'[{K_CM_one[0]}', *K_CM_one[1:-1], f'{K_CM_one[-1]}]', sep = ',\n')
