@@ -6,9 +6,9 @@ load('functions.sage')
 load('data_subfields.sage')
 
 
-quartic = quartic_2
-Kr_list = construct_Kr(quartic)
-# print(Kr_list0); print(len(Kr_list0))
+# quartic = quartic_2
+# Kr_list0 = construct_Kr(quartic)
+# print(len(Kr_list0))
 # Kr_list = []
 # for Kr in Kr_list0:
 #     if Kr not in Kr_list:
@@ -26,6 +26,7 @@ Kr_list = construct_Kr(quartic)
 #     Kr_list_short.append(list_Kr_1[i])
 # Kr_list = Kr_list_short
 
+Kr_list = list_Kr_2
 K_list = compute_K_from_Kr_sub(Kr_list)
 K_CM_one = K_cm_clno_one_list(K_list)
 print(K_CM_one)
