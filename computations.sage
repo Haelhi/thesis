@@ -3,7 +3,7 @@ load("https://bitbucket.org/mstreng/recip/raw/master/recip_online.sage")
 from itertools import combinations
 
 load('functions.sage')
-load('data_subfields.sage')
+load('data_constructed_Kr.sage')
 
 Kr_list = list_Kr_2
 
