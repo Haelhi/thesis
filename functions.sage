@@ -154,9 +154,9 @@ def CM_one_sextic_from_Kr(Kr_list):
         Phir_set = Kr.CM_types()
         for Phir in Phir_set:
             if test_CM_cl_nr_one_with_class_group(Kr, Phir) == True:
-                K_poly = Phir.reflex_field().polynomial()
-                if K_poly.degree() == 3:
-                    K_list.append([K_poly,Kr_pol[0],Kr_pol[1],Kr_pol[2]])
+                K = Phir.reflex_field()
+                if K.g() == 3:
+                    K_list.append([K.polynomial(),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
     return K_list
 
 
