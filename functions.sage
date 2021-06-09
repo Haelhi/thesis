@@ -1,6 +1,3 @@
-from recip import *
-from itertools import combinations
-
 # ----------------------- OLD METHOD USING CLASS NUMBER -------------------------
 # Function Kr_from_quartic: computes composite fields of totally real non-normal quartic fields and
 # imaginary quadratic fields of class number 1,2,4.
