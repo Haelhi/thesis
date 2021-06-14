@@ -12,7 +12,7 @@ Kr_list = list_Kr_2
 print(len(Kr_list))
 
 Kr_list_short = []
-for i in range(14,20):
+for i in range(21,30):
     Kr_list_short.append(Kr_list[i])
 Kr_list = Kr_list_short
 
