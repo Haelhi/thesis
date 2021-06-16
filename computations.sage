@@ -9,10 +9,10 @@ load('data_subfields.sage')
 # Kr_list = list_Kr_1
 Kr_list = list_Kr_2
 
-Kr_list_short = []
-for i in range(31,40):
-    Kr_list_short.append(Kr_list[i])
-Kr_list = Kr_list_short
+#Kr_list_short = []
+#for i in range(31,40):
+#    Kr_list_short.append(Kr_list[i])
+#Kr_list = Kr_list_short
 
 K_list = CM_one_sextic_from_Kr(Kr_list)
 
