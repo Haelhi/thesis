@@ -4,7 +4,7 @@ R = PolynomialRing(QQ,"x")
 fields_F = enumerate_totallyreal_fields_prim(4,10000)
 # print(fields_F)
 o = open('output_quartics.sage','a')
-o.write(fields_F)
+o.write(str(fields_F))
 o.close()
 
 """
