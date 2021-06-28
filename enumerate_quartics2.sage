@@ -1,9 +1,6 @@
 # Compute quartics --> enumerate_quartics.sage
 
-L = [1,2,3]
-o = open('output_bla.sage','a')
-o.write(str(L))
-o.close()
+raise Exception('spam', 'eggs')
 
 R = PolynomialRing(QQ,"x")
 fields_F = enumerate_totallyreal_fields_prim(4,10^8)
