@@ -1,6 +1,6 @@
 # Compute quartics --> enumerate_quartics.sage
 
-pari.allocatemem(10^8)
+pari.allocatemem(10000000000)
 
 R = PolynomialRing(QQ,"x")
 fields_F = enumerate_totallyreal_fields_prim(4,10^8)
