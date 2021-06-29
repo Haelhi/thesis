@@ -1,0 +1,1 @@
+sys:1: RuntimeWarning: cypari2 leaked 33712 bytes on the PARI stack
