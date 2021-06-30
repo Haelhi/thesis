@@ -8,7 +8,7 @@ load('data_subfields.sage')
 
 # Kr_list = list_Kr_1
 # Kr_list = list_Kr_2
-Kr_list = quartic8
+Kr_list = list_Kr_d8
 
 Kr_list_short = []
 for i in range(1,50):
