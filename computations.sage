@@ -6,6 +6,8 @@ from datetime import datetime
 load('functions.sage')
 load('data_subfields.sage')
 
+pari.allocatemem(83613065216)
+
 # Kr_list = list_Kr_1
 # Kr_list = list_Kr_2
 Kr_list = list_Kr_d8
