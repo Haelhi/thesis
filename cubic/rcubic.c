@@ -214,7 +214,7 @@ r_main(GEN Z, GEN X, long mult)
           }\
           else\
             Dmax = mfloor((bc+P)*inva9 + eps);\
-          if (Z != gzero)\
+          if (Z != bzero)\
           {\
             g2 = subii(mulsi(P4, mulss(P,P)), Xaa27); /* 4P^3 - 27a^2 X */\
             g1 = addii(g2, Yaa27);                    /* 4P^3 - 27a^2 Z */\
