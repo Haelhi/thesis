@@ -1,5 +1,5 @@
 #include "config.h"
-#include "<pari/pari.h>"
+#include "pari/pari.h"
 typedef unsigned char uchar;
 
 #if !defined(COUNT_MULT) || defined(CHECK_CLUSTER)
