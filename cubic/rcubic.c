@@ -134,12 +134,12 @@ r_main(GEN Z, GEN X, long mult)
         if (_3dividesf || cgcd(a,c) != 1) continue;
 #endif
         DBG(INDEX_c++);
-	cc = mulss(c,c); P = -a3*c; P4 = P<<2;
+    cc = mulss(c,c); P = -a3*c; P4 = P<<2;
 
-	g2 = mulis(cc,a4*c);
-	g1 = negi(addii(Z,g2));
+    g2 = mulis(cc,a4*c);
+    g1 = negi(addii(Z,g2));
         d = -itos(sqrtint(divis(g1,aa27)));
-	Dmin = maxss(c/3, d);
+    Dmin = maxss(c/3, d);
 
         g1 = negi(addii(X,g2));
         if (signe(g1) > 0)
@@ -189,14 +189,14 @@ r_main(GEN Z, GEN X, long mult)
 #ifdef ONLY_UNRAM
         gcd_ab = cgcd(a,b);
 #endif
-	bb =  b*b; bb2 = bb<<1; b2 = b<<1; b3 = 3*b;
+    bb =  b*b; bb2 = bb<<1; b2 = b<<1; b3 = 3*b;
 
         /* 27 a^2 Z <= 4P^3 < 27 a^2 X  */
         Pmin = cbrt_Zaa27ov4;
         Pmax = cbrt_Xaa27ov4 - 1;
         Cmin = mceil(-eps + (bb - Pmax) / (double)a3);
-	Cmax = mfloor(eps + (bb - Pmin) / (double)a3);
-	Cmax = minss(b-a3, Cmax);
+    Cmax = mfloor(eps + (bb - Pmin) / (double)a3);
+    Cmax = minss(b-a3, Cmax);
 #define INIT_D_LOOP()\
           INIT_U3_CHECK(a,b,c);\
           IF_UNRAMIFIED(if (_3dividesf) continue;)\
@@ -249,11 +249,11 @@ r_main(GEN Z, GEN X, long mult)
           d_LOOP(Dmin,Dmax);\
         }}
 
-	for (c=Cmin; c<=Cmax; c++, avma = avb)
-	{
+    for (c=Cmin; c<=Cmax; c++, avma = avb)
+    {
           INIT_D_LOOP();
           d_LOOP(Dmin,Dmax);
-	}
+    }
         /* now 4P^3 - 27 a^2 X >= 0 */
         Pmin = cbrt_Xaa27ov4;
         l1 = aa9 - bb;
@@ -323,15 +323,15 @@ SECOND: /* solutions in the second d-interval */
 #if 0
       switch(TAB[a])
       {
-	case 13:  GLOB[3]++; break;
-	case 40:  GLOB[4]++; break;
-	case 121: GLOB[5]++; break;
+    case 13:  GLOB[3]++; break;
+    case 40:  GLOB[4]++; break;
+    case 121: GLOB[5]++; break;
       }
 #endif
       if (TAB[a] > 12)
       {
         T = T_from_shift(Z, a, shift);
-	err_printf("%Ps: %d\n",T,TAB[a]); avma=ltop;
+    err_printf("%Ps: %d\n",T,TAB[a]); avma=ltop;
       }
     }
 #endif
@@ -342,7 +342,7 @@ SECOND: /* solutions in the second d-interval */
       {
         GLOB[TAB[a]] = 1;
         T = T_from_shift(Z, a, shift);
-	err_printf("%Ps: %d\n",T,TAB[a]);
+    err_printf("%Ps: %d\n",T,TAB[a]);
       }
     }
 #endif
