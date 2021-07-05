@@ -1,21 +1,21 @@
-# $Id: Makefile,v 1.13 2001/09/28 11:22:22 kb Exp $
 ###
 ### CONFIGURATION
 ###
 
 # 1) Change this IF you used Configure --prefix <MY_PREFIX_DIRECTORY>
 # PARIHOME=MY_PREFIX_DIRECTORY
+# PARIHOME=$(GP_INSTALL_PREFIX)
 PARIHOME=/usr
 
 # 2) Change this IF your pari library was not compiled with gmp (why ?), or
 # if it has a non-standard name, e.g.
-#LIB=-lpari-2-3-0 -lm
+#LIB=-lpari-2-9-0 -lm
 LIB=-lgmp -lpari -lm
 
 ###
 ### NO USER SERVICEABLE PARTS BELOW
 ###
-VERSION=1.2
+VERSION=1.3
 PARIDIR=$(PARIHOME)/include/pari
 PARILIB=$(PARIHOME)/lib
 
@@ -28,7 +28,7 @@ PRFFLAG=-g -pg $(OPTFLAG)
 CC=gcc
 LD=gcc
 LDFLAGS=-L$(PARILIB) -Wl,-rpath,$(PARILIB)
-PROFLIB=/home/kb/pari/Olinux-i686.prf/libpari-2.2.a 
+PROFLIB=/home/kb/pari/Olinux-i686.prf/libpari.a
 
 OBJ=util.o ccubic.o rcubic.o
 OBJNOPRINT=util-noprint.o ccubic.o rcubic.o
@@ -68,6 +68,7 @@ clean::
 
 distrib:: clean
 	 cwd=`pwd`; cd /tmp; ln -s $$cwd cubic-$(VERSION); tar czf cubic-$(VERSION).tgz cubic-$(VERSION)/* --exclude=.git
+	 mv /tmp/cubic-$(VERSION).tgz .
 
 tags::
 	ctags *.c *.h

@@ -134,12 +134,12 @@ r_main(GEN Z, GEN X, long mult)
         if (_3dividesf || cgcd(a,c) != 1) continue;
 #endif
         DBG(INDEX_c++);
-    cc = mulss(c,c); P = -a3*c; P4 = P<<2;
+	cc = mulss(c,c); P = -a3*c; P4 = P<<2;
 
-    g2 = mulis(cc,a4*c);
-    g1 = negi(addii(Z,g2));
+	g2 = mulis(cc,a4*c);
+	g1 = negi(addii(Z,g2));
         d = -itos(sqrtint(divis(g1,aa27)));
-    Dmin = maxss(c/3, d);
+	Dmin = maxss(c/3, d);
 
         g1 = negi(addii(X,g2));
         if (signe(g1) > 0)
@@ -189,14 +189,14 @@ r_main(GEN Z, GEN X, long mult)
 #ifdef ONLY_UNRAM
         gcd_ab = cgcd(a,b);
 #endif
-    bb =  b*b; bb2 = bb<<1; b2 = b<<1; b3 = 3*b;
+	bb =  b*b; bb2 = bb<<1; b2 = b<<1; b3 = 3*b;
 
         /* 27 a^2 Z <= 4P^3 < 27 a^2 X  */
         Pmin = cbrt_Zaa27ov4;
         Pmax = cbrt_Xaa27ov4 - 1;
         Cmin = mceil(-eps + (bb - Pmax) / (double)a3);
-    Cmax = mfloor(eps + (bb - Pmin) / (double)a3);
-    Cmax = minss(b-a3, Cmax);
+	Cmax = mfloor(eps + (bb - Pmin) / (double)a3);
+	Cmax = minss(b-a3, Cmax);
 #define INIT_D_LOOP()\
           INIT_U3_CHECK(a,b,c);\
           IF_UNRAMIFIED(if (_3dividesf) continue;)\
@@ -214,7 +214,7 @@ r_main(GEN Z, GEN X, long mult)
           }\
           else\
             Dmax = mfloor((bc+P)*inva9 + eps);\
-          if (Z != gzero)\
+          if (Z != gen_0)\
           {\
             g2 = subii(mulsi(P4, mulss(P,P)), Xaa27); /* 4P^3 - 27a^2 X */\
             g1 = addii(g2, Yaa27);                    /* 4P^3 - 27a^2 Z */\
@@ -231,9 +231,9 @@ r_main(GEN Z, GEN X, long mult)
         for (avb=avma, c=Cmin; c<=Cmax; c++, avma = avb)\
         {\
           INIT_D_LOOP();\
-          if (Z == gzero) g2 = subii(mulsi(P4, mulss(P,P)), Xaa27);\
+          if (Z == gen_0) g2 = subii(mulsi(P4, mulss(P,P)), Xaa27);\
           if (!quad_eq1_d(aa27,T,g2, Dmin, &Dmax)) continue;\
-          if (gequal0(g2) && egalii(mulss(Dmax,aa27), T)) Dmax--;\
+          if (gequal0(g2) && equalii(mulss(Dmax,aa27), T)) Dmax--;\
           d_LOOP(Dmin,Dmax);\
         }}
 /* d in second interval */
@@ -244,16 +244,16 @@ r_main(GEN Z, GEN X, long mult)
         for (avb=avma, c=Cmin; c<=Cmax; c++, avma = avb)\
         {\
           INIT_D_LOOP();\
-          if (Z == gzero) g2 = subii(mulsi(P4, mulss(P,P)), Xaa27);\
+          if (Z == gen_0) g2 = subii(mulsi(P4, mulss(P,P)), Xaa27);\
           if (!quad_eq2_u(aa27,T,g2, &Dmin, Dmax)) continue;\
           d_LOOP(Dmin,Dmax);\
         }}
 
-    for (c=Cmin; c<=Cmax; c++, avma = avb)
-    {
+	for (c=Cmin; c<=Cmax; c++, avma = avb)
+	{
           INIT_D_LOOP();
           d_LOOP(Dmin,Dmax);
-    }
+	}
         /* now 4P^3 - 27 a^2 X >= 0 */
         Pmin = cbrt_Xaa27ov4;
         l1 = aa9 - bb;
@@ -266,7 +266,7 @@ r_main(GEN Z, GEN X, long mult)
         if (b2 > a3) goto SECOND;
 
         Pmax = s_cubsolve_d(sq(b2 - a3), Xaa27, maxcubsolve);
-        if (Z == gzero) { C_D_LOOPS_1(Pmin,Pmax); }
+        if (Z == gen_0) { C_D_LOOPS_1(Pmin,Pmax); }
         else
         {
           long pmin = maxss(Pmin, aa9 - bb2 + 1);
@@ -290,7 +290,7 @@ r_main(GEN Z, GEN X, long mult)
 SECOND: /* solutions in the second d-interval */
         Pmax = s_cubsolve_d(sq(b2 + a3), Xaa27, maxcubsolve);
 
-        if (b2 > a3 && Z != gzero) /* trivially true otherwise */
+        if (b2 > a3 && Z != gen_0) /* trivially true otherwise */
         {
           l1 = s_cubsolve(sq(b2 - a3), Zaa27, Pmax);
           if (l1 > Pmin) Pmin = l1;
@@ -323,15 +323,15 @@ SECOND: /* solutions in the second d-interval */
 #if 0
       switch(TAB[a])
       {
-    case 13:  GLOB[3]++; break;
-    case 40:  GLOB[4]++; break;
-    case 121: GLOB[5]++; break;
+	case 13:  GLOB[3]++; break;
+	case 40:  GLOB[4]++; break;
+	case 121: GLOB[5]++; break;
       }
 #endif
       if (TAB[a] > 12)
       {
         T = T_from_shift(Z, a, shift);
-    err_printf("%Ps: %d\n",T,TAB[a]); avma=ltop;
+	err_printf("%Ps: %d\n",T,TAB[a]); avma=ltop;
       }
     }
 #endif
@@ -342,7 +342,7 @@ SECOND: /* solutions in the second d-interval */
       {
         GLOB[TAB[a]] = 1;
         T = T_from_shift(Z, a, shift);
-    err_printf("%Ps: %d\n",T,TAB[a]);
+	err_printf("%Ps: %d\n",T,TAB[a]);
       }
     }
 #endif
