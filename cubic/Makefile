@@ -5,7 +5,7 @@
 
 # 1) Change this IF you used Configure --prefix <MY_PREFIX_DIRECTORY>
 # PARIHOME=MY_PREFIX_DIRECTORY
-PARIHOME=/usr/local
+PARIHOME=/usr
 
 # 2) Change this IF your pari library was not compiled with gmp (why ?), or
 # if it has a non-standard name, e.g.
