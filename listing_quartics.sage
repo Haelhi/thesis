@@ -1,14 +1,9 @@
-load('cubics_6-7_C3.sage')
-load('cubics_6-7_S3.sage')
+import json
 
-def check_hessian(hess):
-    for i in hess:
-        if hess[0] != i and hess[0] != -i:
-            return False
-    return True
-    
-listC3 = [i for i in list_entries if check_hessian(i[1])==True]
-listS3 = [i for i in list_entries if check_hessian(i[1])==False]
+with open('cubics_6-7_C3.json') as u:
+  listC3 = json.load(u)
+with open('cubics_6-7_S3.json') as v:
+  listS3 = json.load(v)
 
 Krplus_C3 = []
 R = PolynomialRing(QQ,'x')
