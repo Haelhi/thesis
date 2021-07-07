@@ -5,7 +5,7 @@ cubics = []
 for c in lst_f:
     entries = [int(x) for x in c[2][1:-1].split(',') if x != '']
     entries2 = [int(y) for y in c[1][1:-1].split(',') if x != '']
-    cubics.append([entries,entries2])
+    cubics.append([entries[::-1],entries2])
 
 def check_hessian(hess):
     for i in hess:
