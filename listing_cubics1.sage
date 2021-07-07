@@ -16,9 +16,11 @@ def check_hessian(hess):
 Kplus_C3 = [i for i in cubics if check_hessian(i[1])==True]
 Kplus_S3 = [i for i in cubics if check_hessian(i[1])==False]
 
-o = open('cubics_6-7_C3.sage','a')
+o = open('cubics_0-6_C3.sage','a')
+o.write('listC3 = ')
 o.write(str(Kplus_C3))
 o.close()
-o = open('cubics_6-7_S3.sage','a')
+o = open('cubics_0-6_S3.sage','a')
+o.write('listS3 = ')
 o.write(str(Kplus_S3))
 o.close()
