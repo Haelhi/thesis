@@ -1,9 +1,9 @@
 import json
 
-with open('cubics_6-7_C3.json') as u:
+with open('cubics_7-8_C3.json') as u:
   listC3 = json.load(u)
-with open('cubics_6-7_S3.json') as v:
-  listS3 = json.load(v)
+with open('cubics_7-8_S3.json') as w:
+  listS3 = json.load(w)
 
 Krplus_C3 = []
 R = PolynomialRing(QQ,'x')
