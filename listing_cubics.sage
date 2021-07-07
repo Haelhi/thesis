@@ -18,9 +18,9 @@ def check_hessian(hess):
 Kplus_C3 = [i for i in cubics if check_hessian(i[1])==True]
 Kplus_S3 = [i for i in cubics if check_hessian(i[1])==False]
 
-o = open('cubics_6-7_C3.json','w')
+o = open('cubics_7-8_C3.json','w')
 o.write(json.dumps(Kplus_C3))
 o.close()
-o = open('cubics_6-7_S3.json','w')
+o = open('cubics_7-8_S3.json','w')
 o.write(json.dumps(Kplus_S3))
 o.close()
