@@ -98,12 +98,16 @@ def CM_one_sextic_from_Kr(Kr_list):
         Phir_set = Kr.CM_types(equivalence_classes=True)
         for Phir in Phir_set:
             print("Phir")
-            if test_CM_cl_nr_one_with_class_group(rep_gens, Phir) == True:
-                K = Phir.reflex_field()
-                print(K.polynomial())
-                if K.g() == 3:
-                    K_list.append([K.polynomial(),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
+            if test_CM_cl_nr_one_with_bach_bound(Kr, Phir) == True:
+                if test_CM_cl_nr_one_with_class_group(rep_gens, Phir) == True:
+                    K = Phir.reflex_field()
+                    print(K.polynomial())
+                    if K.g() == 3:
+                        K_list.append([K.polynomial(),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
     return (K_list)
+
+    
+
             
     
 # ----------------------- CHECK IF FIELD ISOMORPHIC TO OTHER FIELDS IN LIST ------------------------
@@ -124,6 +128,36 @@ def check_isomorphic_K_in_list(K,list_sextic):
     if check_isom == 0:
         return "True"
     return "False"
+    # ----------------------- CM CLASS NUMBER ONE FUNCTION WITH BACH BOUND -------------------------
+
+def test_CM_cl_nr_one_with_bach_bound(Kr, Phir):
+    """
+    Test under GRH whether K has CM class number one.
+    The output True means that either K has CM class number one or GRH is false.
+    The output False means that K does not have CM class number one.
+
+    Uses splitting of small primes as well as Weil Q-number enumeration.
+
+    This is Step 3 in Algorithm 3. 
+    
+    INPUT:
+
+    - ''Kr'' - a octic non-Galois CM field  
+    - ''Phir'' - a CM type of Kr
+
+    OUTPUT:
+    
+     - See above.
+
+    """
+    bach_bound = floor(Kr.bach_bound()) 
+    for l in prime_range(bach_bound + 1): 
+        for l_1 in Kr.factor(l):
+            norm_l_1 = l_1[0].norm()
+            if norm_l_1 <= bach_bound:
+                if a_to_mu(Phir, l_1[0]) is None: 
+                    return False 
+    return True
 # ----------------------- CM CLASS NUMBER ONE FUNCTION -------------------------
 # Function test_CM_cl_nr_one_with_class_group: test if K is a CM-class number one field
 # INPUT: (prime representatives of generators of Cl_Kr, CM-type Phir of Kr)
@@ -169,6 +203,7 @@ def test_CM_cl_nr_one_with_class_group(rep_gens, Phir):
         if a_to_mu(Phir, Ip) is None: 
             return False 
     return True
+
 
 # ----------------------- COMPUTE CM CLASS NUMBER ONE FIELDS K -------------------------
 # INPUT: List of sextic reflex fields K of Kr
