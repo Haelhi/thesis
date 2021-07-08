@@ -1,66 +1,3 @@
-# ----------------------- OLD METHOD USING CLASS NUMBER -------------------------
-# Function Kr_from_quartic: computes composite fields of totally real non-normal quartic fields and
-# imaginary quadratic fields of class number 1,2,4.
-# INPUT: (list quartic fields, list imaginary quadratic fields)
-# OUTPUT: list with elements [polynomial of Kr, dKr/dKrplus^2, hKrstar]
-def Kr_from_quartic(quartic,iq):
-    list_Kr = []
-    check_isom = 0
-    for quart in quartic:
-        Krplus.<f0> = NumberField(quart[1])
-        R0.<t0> = PolynomialRing(Krplus)
-        hKrplus = Krplus.class_number()
-        dKrplus = Krplus.discriminant()
-        for quadr in iq:
-            kKrplus.<f1> = Krplus.extension(quadr[1])
-            Kr.<f> = kKrplus.absolute_field()
-            dKr = Kr.discriminant()
-            d = dKr/dKrplus^2
-            if  d == 1:
-                if len(list_Kr) == 0:
-                    hKr = Kr.class_number()
-                    hKrstar = hKr/hKrplus
-                    list_Kr.append([Kr.absolute_polynomial(),d, hKrstar])
-                else:
-                    for m in list_Kr:
-                        n.<b> = NumberField(m[0])
-                        if Kr.is_isomorphic(n) == True:
-                            check_isom = 1
-                            break
-                    if check_isom == 0:
-                        hKr = Kr.class_number()
-                        hKrstar = hKr/hKrplus
-                        list_Kr.append([Kr.absolute_polynomial(),d, hKrstar])
-                    else:
-                        check_isom = 0
-    return list_Kr
-
-# Function compute_K_from_Kr computes sextic fields K from reflex fields Kr up to isomorphism
-# INPUT: list of non-normal octic reflex fields Kr with non-normal subfield Krplus
-# OUTPUT: list with [K,Kr,Phir] where K is the sextic reflex field of Kr and Phir the CM-type
-def compute_K_from_Kr(list_Kr):
-    list_sextic = []
-    check_isom = 0
-    for Kr in list_Kr:
-        Krcm = CM_Field(Kr[0])
-        Phir_set = Krcm.CM_types()
-        for Phir in Phir_set:
-            K = Phir.reflex_field()
-            if K.g() == 3:
-                if len(list_sextic) == 0:
-                    list_sextic.append([K,Krcm,Phir])
-                else:
-                    N.<a> = NumberField(K.polynomial())
-                    for k in list_sextic:
-                        n.<b> = NumberField(k[0].polynomial())
-                        if N.is_isomorphic(n) == True:
-                            check_isom = 1
-                            break
-                    if check_isom == 0:
-                        list_sextic.append([K,Krcm,Phir])
-                    else:
-                        check_isom = 0
-    return list_sextic
 
 # ----------------------- NEW METHOD FOR ALL QUADRATICS SUCH THAT dk|dKrplus -------------------------
 
@@ -70,16 +7,15 @@ def compute_K_from_Kr(list_Kr):
 def construct_Kr(quartic):
     Kr_list = []
     for quart in quartic:
-        Krplus.<f0> = NumberField(quart[1])
-        R0.<t0> = PolynomialRing(Krplus)
+        Krplus.<o> = NumberField(quart[1])
+        R.<t> = PolynomialRing(Krplus)
         dKrplus = Krplus.discriminant()
         kprimes = list(dKrplus.factor())
         for i in range(1,len(kprimes)+1):
-            check_isom = 0
             if i == 1:
                 prime_combos = kprimes
                 for p in prime_combos:
-                    k.<x> = QuadraticField(-p[0])
+                    k.<u> = QuadraticField(-p[0])
                     dk = k.discriminant()
                     if dKrplus % dk == 0:
                         kKrplus.<y> = Krplus.extension(k.polynomial())
@@ -89,9 +25,9 @@ def construct_Kr(quartic):
                 prime_combos = list(combinations(kprimes,i))
                 for p in prime_combos:
                     d = 1
-                    for n in range(1,i+1):
-                        d = d * p[i-1][0]
-                    k.<x> = QuadraticField(-d)
+                    for n in range(0,len(p)):
+                        d = d * p[n][0]
+                    k.<u> = QuadraticField(-d)
                     dk = k.discriminant()
                     if dKrplus % dk == 0:
                         kKrplus.<y> = Krplus.extension(k.polynomial())
