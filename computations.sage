@@ -4,28 +4,26 @@ from itertools import combinations
 from datetime import datetime
 
 load('functions.sage')
-load('quartic8.sage')
+# load('quartic8.sage')
 load('data_subfields.sage')
 
 pari.allocatemem(83613065216)
 
-quartic = quartic8
-Kr_list0 = construct_Kr(quartic)
-Kr_list = []
-for Kr in Kr_list0:
-    if Kr not in Kr_list:
-        Kr_list.append(Kr)
-print(Kr_list)
+#quartic = quartic8
+#Kr_list0 = construct_Kr(quartic)
+#Kr_list = []
+#for Kr in Kr_list0:
+#    if Kr not in Kr_list:
+#        Kr_list.append(Kr)
+#print(Kr_list)
 
-#Kr_list = list_Kr_1
-# Kr_list = list_Kr_2
-# Kr_list = list_Kr_d8
+Kr_list = list_Kr_d8
 
-#Kr_list_short = []
-#for i in range(116,150):
-#    Kr_list_short.append(Kr_list[i])
-#Kr_list = Kr_list_short
+Kr_list_short = []
+for i in range(0,50):
+    Kr_list_short.append(Kr_list[i])
+Kr_list = Kr_list_short
 
-#K_list = CM_one_sextic_from_Kr(Kr_list)
+K_list = CM_one_sextic_from_Kr(Kr_list)
 
-#print(K_list)
+print(K_list)
