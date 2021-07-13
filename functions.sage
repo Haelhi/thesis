@@ -7,7 +7,7 @@
 def construct_Kr(quartic):
     Kr_list = []
     for quart in quartic:
-        Krplus.<o> = NumberField(quart[1])
+        Krplus.<o> = NumberField(quart)
         R.<t> = PolynomialRing(Krplus)
         dKrplus = Krplus.discriminant()
         kprimes = list(dKrplus.factor())
@@ -98,12 +98,12 @@ def CM_one_sextic_from_Kr(Kr_list):
         Phir_set = Kr.CM_types(equivalence_classes=True)
         for Phir in Phir_set:
             print("Phir")
-            if test_CM_cl_nr_one_with_bach_bound(Kr, Phir) == True:
-                if test_CM_cl_nr_one_with_class_group(rep_gens, Phir) == True:
-                    K = Phir.reflex_field()
-                    print(K.polynomial())
-                    if K.g() == 3:
-                        K_list.append([K.polynomial(),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
+#            if test_CM_cl_nr_one_with_bach_bound(Kr, Phir) == True:
+            if test_CM_cl_nr_one_with_class_group(rep_gens, Phir) == True:
+                K = Phir.reflex_field()
+                print(K.polynomial())
+                if K.g() == 3:
+                    K_list.append([K.polynomial(),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
     return (K_list)
 
     
