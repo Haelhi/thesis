@@ -20,7 +20,7 @@ pari.allocatemem(83613065216)
 Kr_list = list_Kr_d8
 
 Kr_list_short = []
-for i in range(0,50):
+for i in range(50,150):
     Kr_list_short.append(Kr_list[i])
 Kr_list = Kr_list_short
 
