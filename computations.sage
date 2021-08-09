@@ -7,6 +7,8 @@ load('functions.sage')
 # load('quartic8.sage')
 load('data_subfields.sage')
 
+pari.allocatemem(83613065216)
+
 #quartic = quartic8
 #Kr_list0 = construct_Kr(quartic)
 #Kr_list = []
@@ -18,7 +20,7 @@ load('data_subfields.sage')
 Kr_list = list_Kr_d8
 
 Kr_list_short = []
-for i in range(200,250):
+for i in range(250,300):
     Kr_list_short.append(Kr_list[i])
 Kr_list = Kr_list_short
 
