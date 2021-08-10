@@ -7,7 +7,7 @@ load('functions.sage')
 # load('quartic8.sage')
 load('data_subfields.sage')
 
-pari.allocatemem(83613065216)
+pari.allocatemem(80000000000)
 
 #quartic = quartic8
 #Kr_list0 = construct_Kr(quartic)
