@@ -100,15 +100,21 @@ def CM_one_sextic_from_Kr(Kr_list):
             Ip = I.representative_prime(norm_bound=M)
             rep_gens.append(Ip)
         Phir_set = Kr.CM_types(equivalence_classes=True)
+        i = 0
         for Phir in Phir_set:
             print("Phir")
+            i = i + 1
             if test_CM_cl_nr_one_with_class_group(rep_gens, Phir) == True:
                 K = Phir.reflex_field()
                 print(K.polynomial())
                 if K.g() == 3:
                     K_list.append([pari.polredabs(K.polynomial()),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
                     break
-    return (K_list)
+                if K.g() == 1:
+                    break
+            if i == 6:
+                break
+    return K_list
 
     
 
