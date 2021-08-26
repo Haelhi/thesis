@@ -25,6 +25,10 @@ for i in range(0,200):
     Kr_list_short.append(Kr_list[i])
 Kr_list = Kr_list_short
 
+print(datetime.now())
+
 K_list = CM_one_sextic_from_Kr(Kr_list)
+
+print(datetime.now())
 
 print(K_list)
