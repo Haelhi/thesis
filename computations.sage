@@ -6,11 +6,11 @@ from datetime import datetime
 pari.allocatemem(80000000000)
 
 load('functions.sage')
-load('data_quartics.sage')
-# load('data_Kr.sage')
+# load('data_quartics.sage')
+# load('data_Kr_d9.sage')
 
 
-quartic = quartic9
+quartic = quartic11
 Kr_list0 = construct_Kr(quartic)
 Kr_list = []
 for Kr in Kr_list0:
