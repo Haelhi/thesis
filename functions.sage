@@ -20,7 +20,9 @@ def construct_Kr(quartic):
                     if dKrplus % dk == 0:
                         kKrplus.<y> = Krplus.extension(k.polynomial())
                         Kr.<z> = kKrplus.absolute_field()
-                        Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+                        dKr = Kr.discriminant()
+                        if dKr == dKrplus^2:
+                            Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
             else:
                 prime_combos = list(combinations(kprimes,i))
                 for p in prime_combos:
@@ -32,7 +34,9 @@ def construct_Kr(quartic):
                     if dKrplus % dk == 0:
                         kKrplus.<y> = Krplus.extension(k.polynomial())
                         Kr.<z> = kKrplus.absolute_field()
-                        Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+                        dKr = Kr.discriminant()
+                        if dKr == dKrplus^2:
+                            Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
     return Kr_list
 
 # Can this be made more efficient with isomorphism check?
@@ -86,11 +90,11 @@ def check_list_K(list_sextic):
 def CM_one_sextic_from_Kr(Kr_list):
     K_list = []
     for Kr_pol in Kr_list:
+        print(Kr_pol[0])
         Kr = CM_Field(Kr_pol[0])
         clKr = Kr.class_group()
         gens = clKr.gens()
         rep_gens = []
-        print(Kr_pol[0])
         for I in gens:
             M = Kr.minkowski_bound().numerical_approx().ceil()
             Ip = I.representative_prime(norm_bound=M)
@@ -98,12 +102,11 @@ def CM_one_sextic_from_Kr(Kr_list):
         Phir_set = Kr.CM_types(equivalence_classes=True)
         for Phir in Phir_set:
             print("Phir")
-#            if test_CM_cl_nr_one_with_bach_bound(Kr, Phir) == True:
             if test_CM_cl_nr_one_with_class_group(rep_gens, Phir) == True:
                 K = Phir.reflex_field()
                 print(K.polynomial())
                 if K.g() == 3:
-                    K_list.append([K.polynomial(),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
+                    K_list.append([pari.polredabs(K.polynomial()),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
     return (K_list)
 
     

@@ -5,7 +5,7 @@ from datetime import datetime
 
 load('functions.sage')
 # load('quartic8.sage')
-load('data_subfields.sage')
+load('data_Kr.sage')
 
 pari.allocatemem(80000000000)
 
@@ -19,10 +19,10 @@ pari.allocatemem(80000000000)
 
 Kr_list = list_Kr_d8
 
-Kr_list_short = []
-for i in range(200,250):
-    Kr_list_short.append(Kr_list[i])
-Kr_list = Kr_list_short
+#Kr_list_short = []
+#for i in range(200,250):
+#    Kr_list_short.append(Kr_list[i])
+#Kr_list = Kr_list_short
 
 K_list = CM_one_sextic_from_Kr(Kr_list)
 
