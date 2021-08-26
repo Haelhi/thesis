@@ -3,11 +3,12 @@ load("https://bitbucket.org/mstreng/recip/raw/master/recip_online.sage")
 from itertools import combinations
 from datetime import datetime
 
+pari.allocatemem(80000000000)
+
 load('functions.sage')
 load('data_quartics.sage')
 # load('data_Kr.sage')
 
-pari.allocatemem(80000000000)
 
 quartic = quartic9
 Kr_list0 = construct_Kr(quartic)
