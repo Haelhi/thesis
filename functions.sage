@@ -22,7 +22,7 @@ def construct_Kr(quartic):
                         Kr.<z> = kKrplus.absolute_field()
                         dKr = Kr.discriminant()
                         if dKr == dKrplus^2:
-                            Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+                            Kr_list.append([pari().polredabs(Kr.polynomial()),pari().polredabs(k.polynomial()),Krplus.class_number()])
             else:
                 prime_combos = list(combinations(kprimes,i))
                 for p in prime_combos:
@@ -36,7 +36,7 @@ def construct_Kr(quartic):
                         Kr.<z> = kKrplus.absolute_field()
                         dKr = Kr.discriminant()
                         if dKr == dKrplus^2:
-                            Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+                            Kr_list.append([pari().polredabs(Kr.polynomial()),pari().polredabs(k.polynomial()),Krplus.class_number()])
     return Kr_list
 
 # Can this be made more efficient with isomorphism check?
@@ -107,6 +107,7 @@ def CM_one_sextic_from_Kr(Kr_list):
                 print(K.polynomial())
                 if K.g() == 3:
                     K_list.append([pari.polredabs(K.polynomial()),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
+                    break
     return (K_list)
 
     
