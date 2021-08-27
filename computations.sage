@@ -20,7 +20,7 @@ print(Kr_list)
 #Kr_list = Kr_d9
 
 #Kr_list_short = []
-#for i in range(300,400):
+#for i in range(700,800):
 #    Kr_list_short.append(Kr_list[i])
 #Kr_list = Kr_list_short
 
