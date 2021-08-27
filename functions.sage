@@ -1,10 +1,10 @@
 
-# ----------------------- NEW METHOD FOR ALL QUADRATICS SUCH THAT dk|dKrplus -------------------------
+# ----------------------- CONSTRUCT Kr FROM QUARTIC FIELDS -------------------------
 
 # Function construct_Kr: computes composite field Kr = kKrplus with all k such that dk|dKrplus
 # INPUT: LMFDB output list of quartic fields
 # OUTPUT: list with elements [polynomial of Kr, polynomial of k, class number of Krplus]
-def construct_Kr(quartic):
+def construct_Kr_A4(quartic):
     Kr_list = []
     for quart in quartic:
         Krplus.<o> = NumberField(quart)
@@ -38,59 +38,51 @@ def construct_Kr(quartic):
                         if dKr == dKrplus^2:
                             Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
     return Kr_list
-
-# Can this be made more efficient with isomorphism check?
-# Function compute_K_from_Kr_sub computes sextic fields K from reflex fields Kr up to isomorphism
-# INPUT: list of non-normal octic reflex fields Kr with non-normal subfield Krplus
-# OUTPUT: list with [Kr, Phir, K, k, class number of Krplus]
-def compute_K_from_Kr_sub(list_Kr):
-    list_sextic = []
-    check_isom = 0
-    for Kr in list_Kr:
-        Krcm = CM_Field(Kr[0])
-        k = CM_Field(Kr[1])
-        Phir_set = Krcm.CM_types()
-        for Phir in Phir_set:
-            K = Phir.reflex_field()
-            if K.g() == 3:
-                if len(list_sextic) == 0:
-                    list_sextic.append([Krcm,Phir,K,k,Kr[2]])
-                else:
-                    N.<a> = NumberField(K.polynomial())
-                    for m in list_sextic:
-                        n.<b> = NumberField(m[0].polynomial())
-                        if N.is_isomorphic(n) == True:
-                            check_isom = 1
-                            break
-                    if check_isom == 0:
-                        list_sextic.append([Krcm,Phir,K,k,Kr[2]])
-                    else:
-                        check_isom = 0
-    return list_sextic
-
-
-# ----------------------- CHECK IF SEXTIC FIELD IS OF CORRECT FORM -------------------------
-def check_list_K(list_sextic):
-    # Check if sextic fields with polynomial in list_sextic are of type I:
-    # not Galois, no imaginary quadratic subfield and Galois maximally totally real subfield
-    list_K = []
-    for K in list_sextic:
-        Knf.<a> = NumberField(K[0].polynomial())
-        if Knf.is_galois() == False:
-            if all(k[0].degree()!=2 for k in Knf.subfields()):
-                for Kplus in Knf.subfields():
-                    if Kplus[0].degree() == 3:
-                        if Kplus[0].is_galois() == true:
-                            if len(Kplus[0].real_embeddings()) == 3:
-                                list_K.append(K) 
-    return list_K
+    
+    
+    
+# Function construct_Kr: computes composite field Kr = kKrplus with all k such that dk|dKrplus
+# INPUT: LMFDB output list of quartic fields
+# OUTPUT: list with elements [polynomial of Kr, polynomial of k, class number of Krplus]
+def construct_Kr_S4(quartic):
+    Kr_list = []
+    for quart in quartic:
+        Krplus.<o> = NumberField(quart)
+        R.<t> = PolynomialRing(Krplus)
+        dKrplus = Krplus.discriminant()
+        kprimes = list(dKrplus.factor())
+        for i in range(1,len(kprimes)+1):
+            if i == 1:
+                prime_combos = kprimes
+                for p in prime_combos:
+                    k.<u> = QuadraticField(-p[0])
+                    dk = k.discriminant()
+                    if dKrplus % dk == 0:
+                        kKrplus.<y> = Krplus.extension(k.polynomial())
+                        Kr.<z> = kKrplus.absolute_field()
+                        dKr = Kr.discriminant()
+                        Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+            else:
+                prime_combos = list(combinations(kprimes,i))
+                for p in prime_combos:
+                    d = 1
+                    for n in range(0,len(p)):
+                        d = d * p[n][0]
+                    k.<u> = QuadraticField(-d)
+                    dk = k.discriminant()
+                    if dKrplus % dk == 0:
+                        kKrplus.<y> = Krplus.extension(k.polynomial())
+                        Kr.<z> = kKrplus.absolute_field()
+                        dKr = Kr.discriminant()
+                        Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+    return Kr_list
 
 # ----------------------- FIRST CHECK CM ONE THEN COMPUTE K ---------------------------
 
 def CM_one_sextic_from_Kr(Kr_list):
     K_list = []
     for Kr_pol in Kr_list:
-        print(Kr_pol[0])
+#        print(Kr_pol[0])
         Kr = CM_Field(Kr_pol[0])
         clKr = Kr.class_group()
         gens = clKr.gens()
@@ -102,11 +94,11 @@ def CM_one_sextic_from_Kr(Kr_list):
         Phir_set = Kr.CM_types(equivalence_classes=True)
         i = 0
         for Phir in Phir_set:
-            print("Phir")
+#            print("Phir")
             i = i + 1
             if test_CM_cl_nr_one_with_class_group(rep_gens, Phir) == True:
                 K = Phir.reflex_field()
-                print(K.polynomial())
+#                print(K.polynomial())
                 if K.g() == 3:
                     K_list.append([pari.polredabs(K.polynomial()),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
                     break
@@ -116,9 +108,16 @@ def CM_one_sextic_from_Kr(Kr_list):
                 break
     return K_list
 
-    
+# ----------------------- COMPUTE K FROM PARTIAL LIST Kr FOR PARALLEL COMPUTATION ---------------------------
 
-            
+@parallel(4)
+def CM_one_from_partial_Kr(Kr_list,x):
+    Kr_list_short = []
+    for i in range(x[0],x[1]):
+        Kr_list_short.append(Kr_list[i])
+    K_list = CM_one_sextic_from_Kr(Kr_list_short)
+    return K_list
+    
     
 # ----------------------- CHECK IF FIELD ISOMORPHIC TO OTHER FIELDS IN LIST ------------------------
 # Check if list contains isomorphic K
@@ -229,11 +228,3 @@ def K_cm_clno_one_list(K_list):
             hk = k.class_number()
             list_CM_one.append([K.polynomial(),hK,hk,hKrstar])
     return(list_CM_one)
-
-# ----------------------- WORK AROUND REPRESENTATIVE_PRIME BUG ------------------------
-def execute_rep_prime(nb):
-    try:
-        return representative_prime(norm_bound=nb)
-    except:
-        nb = nb*10
-        return execute_rep_prime(nb)
