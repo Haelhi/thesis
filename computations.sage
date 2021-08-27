@@ -9,25 +9,25 @@ load('functions.sage')
 load('data_quartics_S4.sage')
 load('data_Kr_d9.sage')
 
-#quartic = quartic5
-#Kr_list0 = construct_Kr(quartic)
-#Kr_list = []
-#for Kr in Kr_list0:
-#    if Kr not in Kr_list:
-#        Kr_list.append(Kr)
-#print(Kr_list)
+quartic = quartic5
+Kr_list0 = construct_Kr(quartic)
+Kr_list = []
+for Kr in Kr_list0:
+    if Kr not in Kr_list:
+        Kr_list.append(Kr)
+print(Kr_list)
 
-Kr_list = Kr_d9
+#Kr_list = Kr_d9
 
-Kr_list_short = []
-for i in range(700,800):
-    Kr_list_short.append(Kr_list[i])
-Kr_list = Kr_list_short
+#Kr_list_short = []
+#for i in range(700,800):
+#    Kr_list_short.append(Kr_list[i])
+#Kr_list = Kr_list_short
 
-print(datetime.now())
+#print(datetime.now())
 
-K_list = CM_one_sextic_from_Kr(Kr_list)
+#K_list = CM_one_sextic_from_Kr(Kr_list)
 
-print(datetime.now())
+#print(datetime.now())
 
-print(K_list)
+#print(K_list)
