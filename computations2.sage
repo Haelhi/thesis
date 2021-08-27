@@ -16,3 +16,5 @@ for K in list_K:
     Phi = Kcm.CM_types()[0]
     Krcm = Phi.reflex_field()
     comp_list.append([K,Krcm.polynomial()])
+
+print(comp_list)
