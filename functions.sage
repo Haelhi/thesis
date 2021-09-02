@@ -1,88 +1,44 @@
 
 # ----------------------- CONSTRUCT Kr FROM QUARTIC FIELDS -------------------------
 
-# Function construct_Kr: computes composite field Kr = kKrplus with all k such that dk|dKrplus
+# CASE 1: dKr/dKrplus^2 == 1
+# Function construct_Kr: computes composite field Kr = kKrplus with all k such that dk|dKrplus 
 # INPUT: LMFDB output list of quartic fields
 # OUTPUT: list with elements [polynomial of Kr, polynomial of k, class number of Krplus]
-def construct_Kr_A4(quartic):
+def construct_Kr_1(quartic):
     Kr_list = []
-    for quart in quartic:
-        Krplus.<o> = NumberField(quart)
+    for poly in quartic:
+        Krplus.<a> = NumberField(poly)
         R.<t> = PolynomialRing(Krplus)
         dKrplus = Krplus.discriminant()
-        kprimes = list(dKrplus.factor())
-        for i in range(1,len(kprimes)+1):
+        primes = list(dKrplus.factor())
+        for i in range(1,len(primes)+1):
             if i == 1:
-                prime_combos = kprimes
-                for p in prime_combos:
-                    k.<u> = QuadraticField(-p[0])
-                    dk = k.discriminant()
-                    if dKrplus % dk == 0:
-                        kKrplus.<y> = Krplus.extension(k.polynomial())
-                        Kr.<z> = kKrplus.absolute_field()
-                        dKr = Kr.discriminant()
-                        if dKr == dKrplus^2:
-                            Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+                p_combos = [[p] for p in primes]
             else:
-                prime_combos = list(combinations(kprimes,i))
-                for p in prime_combos:
-                    d = 1
-                    for n in range(0,len(p)):
-                        d = d * p[n][0]
-                    k.<u> = QuadraticField(-d)
-                    dk = k.discriminant()
-                    if dKrplus % dk == 0:
-                        kKrplus.<y> = Krplus.extension(k.polynomial())
-                        Kr.<z> = kKrplus.absolute_field()
-                        dKr = Kr.discriminant()
-                        if dKr == dKrplus^2:
-                            Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
-    return Kr_list
-    
-    
-    
-# Function construct_Kr: computes composite field Kr = kKrplus with all k such that dk|dKrplus
-# INPUT: LMFDB output list of quartic fields
-# OUTPUT: list with elements [polynomial of Kr, polynomial of k, class number of Krplus]
-def construct_Kr_S4(quartic):
-    Kr_list = []
-    for quart in quartic:
-        Krplus.<o> = NumberField(quart)
-        R.<t> = PolynomialRing(Krplus)
-        dKrplus = Krplus.discriminant()
-        kprimes = list(dKrplus.factor())
-        for i in range(1,len(kprimes)+1):
-            if i == 1:
-                prime_combos = kprimes
-                for p in prime_combos:
-                    k.<u> = QuadraticField(-p[0])
-                    dk = k.discriminant()
-                    if dKrplus % dk == 0:
-                        kKrplus.<y> = Krplus.extension(k.polynomial())
-                        Kr.<z> = kKrplus.absolute_field()
-                        dKr = Kr.discriminant()
-                        Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
-            else:
-                prime_combos = list(combinations(kprimes,i))
-                for p in prime_combos:
-                    d = 1
-                    for n in range(0,len(p)):
-                        d = d * p[n][0]
-                    k.<u> = QuadraticField(-d)
-                    dk = k.discriminant()
-                    if dKrplus % dk == 0:
-                        kKrplus.<y> = Krplus.extension(k.polynomial())
-                        Kr.<z> = kKrplus.absolute_field()
-                        dKr = Kr.discriminant()
+                p_combos = list(combinations(primes,i))
+            for p in p_combos:
+                d = 1
+                for n in range(0,len(p)):
+                    d = d * p[n][0]
+                k.<b> = QuadraticField(-d)
+                dk = k.discriminant()
+                if dKrplus % dk == 0:
+                    kKrplus.<y> = Krplus.extension(k.polynomial())
+                    Kr.<z> = kKrplus.absolute_field()
+                    dKr = Kr.discriminant()
+                    if dKr/dKrplus^2 == 1:
                         Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
     return Kr_list
 
 # ----------------------- FIRST CHECK CM ONE THEN COMPUTE K ---------------------------
 
 def CM_one_sextic_from_Kr(Kr_list):
+    j = 0
     K_list = []
     for Kr_pol in Kr_list:
-#        print(Kr_pol[0])
+        print(Kr_pol[0])
+        print(j)
         Kr = CM_Field(Kr_pol[0])
         clKr = Kr.class_group()
         gens = clKr.gens()
@@ -94,18 +50,17 @@ def CM_one_sextic_from_Kr(Kr_list):
         Phir_set = Kr.CM_types(equivalence_classes=True)
         i = 0
         for Phir in Phir_set:
-#            print("Phir")
+            print("Phir")
             i = i + 1
             if test_CM_cl_nr_one_with_class_group(rep_gens, Phir) == True:
                 K = Phir.reflex_field()
-#                print(K.polynomial())
+                print(K.polynomial())
                 if K.g() == 3:
                     K_list.append([pari.polredabs(K.polynomial()),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
-                    break
-                if K.g() == 1:
-                    break
-            if i == 6:
-                break
+#                    break
+#            if i == 6:
+#                break
+        j = j + 1
     return K_list
 
 # ----------------------- COMPUTE K FROM PARTIAL LIST Kr FOR PARALLEL COMPUTATION ---------------------------
@@ -119,25 +74,7 @@ def CM_one_from_partial_Kr(Kr_list,x):
     return K_list
     
     
-# ----------------------- CHECK IF FIELD ISOMORPHIC TO OTHER FIELDS IN LIST ------------------------
-# Check if list contains isomorphic K
-# INPUT: (CM-field K, list of polynomials of computed fields K)
-# OUTPUT: "True" if there are no isomorphic K in the existing list, "False" if there are
-def check_isomorphic_K_in_list(K,list_sextic):
-    check_isom = 0
-    if len(list_sextic) == 0:
-        return "True"
-    else:
-        N.<a> = NumberField(K.polynomial())
-        for k in list_sextic:
-            n.<b> = NumberField(k[0].polynomial())
-            if N.is_isomorphic(n) == True:
-                check_isom = 1
-                break
-    if check_isom == 0:
-        return "True"
-    return "False"
-    # ----------------------- CM CLASS NUMBER ONE FUNCTION WITH BACH BOUND -------------------------
+# ----------------------- CM CLASS NUMBER ONE FUNCTION WITH BACH BOUND -------------------------
 
 def test_CM_cl_nr_one_with_bach_bound(Kr, Phir):
     """
@@ -167,7 +104,11 @@ def test_CM_cl_nr_one_with_bach_bound(Kr, Phir):
                 if a_to_mu(Phir, l_1[0]) is None: 
                     return False 
     return True
+    
+    
 # ----------------------- CM CLASS NUMBER ONE FUNCTION -------------------------
+
+
 # Function test_CM_cl_nr_one_with_class_group: test if K is a CM-class number one field
 # INPUT: (prime representatives of generators of Cl_Kr, CM-type Phir of Kr)
 # OUTPUT: True if CM-class number one field.
@@ -209,6 +150,16 @@ def test_CM_cl_nr_one_with_class_group(rep_gens, Phir):
 #         M = Kr.minkowski_bound().numerical_approx().ceil()
 #         Ip = I.representative_prime(norm_bound=M)
     for Ip in rep_gens:
+        if a_to_mu(Phir, Ip) is None: 
+            return False 
+    return True
+    
+def test_CM_cl_nr_one_with_class_group_og(Kr, Phir):
+    clKr = Kr.class_group()
+    gens = clKr.gens()
+    for I in gens:
+        M = Kr.minkowski_bound().numerical_approx().ceil()
+        Ip = I.representative_prime(norm_bound=M)
         if a_to_mu(Phir, Ip) is None: 
             return False 
     return True
