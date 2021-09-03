@@ -20,7 +20,7 @@ load('data_Kr_d10.sage')
 Kr_list = Kr_d10
 
 Kr_list_short = []
-for i in range(0,100):
+for i in range(93,200):
     Kr_list_short.append(Kr_list[i])
 Kr_list = Kr_list_short
 
