@@ -57,9 +57,9 @@ def CM_one_sextic_from_Kr(Kr_list):
                 print(K.polynomial())
                 if K.g() == 3:
                     K_list.append([pari.polredabs(K.polynomial()),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
-#                    break
-#            if i == 6:
-#                break
+                    break
+            if i == 6:
+                break
         j = j + 1
     return K_list
 
