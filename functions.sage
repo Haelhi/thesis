@@ -31,6 +31,35 @@ def construct_Kr_1(quartic):
                         Kr_list.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
     return Kr_list
 
+
+# CASE 2: dKr/dKrplus^2 == p and just use k = QQ(sqrt(-p))
+# Function construct_Kr: computes composite field Kr = kKrplus with all k such that dk|dKrplus 
+# INPUT: LMFDB output list of quartic fields
+# OUTPUT: list with elements [polynomial of Kr, polynomial of k, class number of Krplus]
+
+def construct_Kr_complete(quartic):
+    Kr_list_one = []
+    Kr_list_prime = []
+    for poly in quartic:
+        Krplus.<a> = NumberField(poly)
+        R.<t> = PolynomialRing(Krplus)
+        dKrplus = Krplus.discriminant()
+        primes = list(dKrplus.factor())
+        for P in primes:
+            if P[0] % 4 == 3 or P[0] == 2:
+                k.<b> = QuadraticField(-P[0])
+                dk = k.discriminant()
+                if dKrplus % dk == 0:
+                    kKrplus.<y> = Krplus.extension(k.polynomial())
+                    Kr.<z> = kKrplus.absolute_field()
+                    dKr = Kr.discriminant()
+                    if dKr/dKrplus^2 == 1:
+                            Kr_list_one.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+                    if dKr/dKrplus^2 != 1:
+                            Kr_list_prime.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+    return (Kr_list_one, Kr_list_prime)
+
+
 # ----------------------- FIRST CHECK CM ONE THEN COMPUTE K ---------------------------
 
 def CM_one_sextic_from_Kr(Kr_list):
@@ -108,6 +137,15 @@ def test_CM_cl_nr_one_with_bach_bound(Kr, Phir):
     
 # ----------------------- CM CLASS NUMBER ONE FUNCTION -------------------------
 
+def test_CM_cl_nr_one_with_class_group_2(Kr, Phir):
+    clKr = Kr.class_group()
+    gens = clKr.gens()
+    for I in gens:
+        M = Kr.minkowski_bound().numerical_approx().ceil()
+        Ip = I.representative_prime(norm_bound=M)
+        if a_to_mu(Phir, Ip) is None: 
+            return False 
+    return True
 
 # Function test_CM_cl_nr_one_with_class_group: test if K is a CM-class number one field
 # INPUT: (prime representatives of generators of Cl_Kr, CM-type Phir of Kr)
