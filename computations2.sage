@@ -10,7 +10,7 @@ load('Data/Kr_d7_p_div_dKplus.sage')
 load('Data/Kr_d8_p_div_dKplus.sage')
 load('Data/Kr_d9_p_div_dKplus.sage')
 
-Kr_list = Kr_d7_one
+Kr_list = Kr_d7_prime
 
 n = len(Kr_list)
 start = 0
@@ -21,7 +21,7 @@ else:
     
 while end <= len(Kr_list):
     K_list_partial = CM_one_sextic_from_Kr(Kr_list[start:end])
-    o = open('Data/K_CM_one_d7.sage','a')
+    o = open('Data/K_CM_prime_d7.sage','a')
     o.write(str(start))
     o.write('\n')
     o.write(str(end))
@@ -33,7 +33,7 @@ while end <= len(Kr_list):
     end = end + 50
     if end > n:
         K_list_partial = CM_one_sextic_from_Kr(Kr_list[start:n])
-        o = open('Data/K_CM_one_d7.sage','a')
+        o = open('Data/K_CM_prime_d7.sage','a')
         o.write(str(start))
         o.write('\n')
         o.write(str(end))
