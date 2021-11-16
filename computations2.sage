@@ -13,11 +13,11 @@ load('Data/Kr_d9_p_div_dKplus.sage')
 Kr_list = Kr_d7_prime
 
 n = len(Kr_list)
-start = 0
+start = 80
 if n < 51:
     end = n
 else:
-    end = 50
+    end = 130
     
 while end <= len(Kr_list):
     K_list_partial = CM_one_sextic_from_Kr(Kr_list[start:end])
