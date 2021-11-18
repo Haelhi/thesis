@@ -59,6 +59,38 @@ def construct_Kr_complete(quartic):
                             Kr_list_prime.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
     return (Kr_list_one, Kr_list_prime)
 
+# ----------------------- PARALLEL: COMPUTE K AND WRITE IN FILE ---------------------------
+
+def CM_one_sextic_from_Kr_write(Kr_list):
+    j = 0
+    K_list = []
+    for Kr_pol in Kr_list:
+        Kr = CM_Field(Kr_pol[0])
+        clKr = Kr.class_group()
+        gens = clKr.gens()
+        rep_gens = []
+        for I in gens:
+            M = Kr.minkowski_bound().numerical_approx().ceil()
+            Ip = I.representative_prime(norm_bound=M)
+            rep_gens.append(Ip)
+        Phir_set = Kr.CM_types(equivalence_classes=True)
+        i = 0
+        for Phir in Phir_set:
+            i = i + 1
+            if test_CM_cl_nr_one_with_class_group(rep_gens, Phir) == True:
+                K = Phir.reflex_field()
+                if K.g() == 3:
+                    polyK = pari.polredabs(K.polynomial())
+                    o = open('parallel_OUTPUT.sage','a') 
+                    o.write(str([polyK,Kr_pol[0],Kr_pol[1],Kr_pol[2]]))
+                    o.write(', ')
+                    o.close()
+                    break
+            if i == 6:
+                break
+        j = j + 1
+    return K_list
+
 
 # ----------------------- FIRST CHECK CM ONE THEN COMPUTE K ---------------------------
 
@@ -92,7 +124,19 @@ def CM_one_sextic_from_Kr(Kr_list):
         j = j + 1
     return K_list
 
-# ----------------------- COMPUTE K FROM PARTIAL LIST Kr FOR PARALLEL COMPUTATION ---------------------------
+# ----------------------- PARALLEL COMPUTATION FUNCTIONS ---------------------------
+
+# INPUT: L: list to be split up; n: number of chunks
+# OUTPUT: list of chunks from L
+def divide_into_chunks(L,n):
+    Chunk_list = []
+    size = len(L)
+    chunk_size = ceil(size/n)
+    s = [L[j * chunk_size : (j+1)*chunk_size] for j in range(n)]
+    for r in s:
+        if r != []:
+            Chunk_list.append(r)
+    return Chunk_list
 
 @parallel(4)
 def CM_one_from_partial_Kr(Kr_list,x):
