@@ -24,17 +24,17 @@ def parallel_comp(list_of_chunks):
 print(datetime.now())
 
 o = open('parallel_OUTPUT.sage','a')
-o.write('K_d7_prime = [')
+o.write('K_d8_prime = [')
 o.close()
 
-data = Kr_d7_prime
-chunks = divide_into_chunks(data,50)
+data = Kr_d8_prime[240:len(Kr_d8_prime)]
+chunks = divide_into_chunks(data,1000)
 # CM_one_sextic_from_Kr(chunks[0])
 
 for x in parallel_comp(chunks):
     print(list(x))
     
-o = open('parallel_OUTPUT.sage','a')
+o = open('parallel_output.sage','a')
 o.write(']')
 o.write('\n\n\n')
 o.close()
