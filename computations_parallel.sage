@@ -12,7 +12,7 @@ load('Data/Kr_d9_p_div_dKplus.sage')
 
 # INPUT: list of chunks (output of divide_into_chunks)
 # OUTPUT: parallel output with K
-@parallel(16)
+@parallel(30)
 def parallel_comp(list_of_chunks):
     chunks_K = []
     for chunk in list_of_chunks:
@@ -24,10 +24,10 @@ def parallel_comp(list_of_chunks):
 print(datetime.now())
 
 o = open('parallel_OUTPUT.sage','a')
-o.write('K_d8_prime = [')
+o.write('K_d9_prime = [')
 o.close()
 
-data = Kr_d8_prime[240:len(Kr_d8_prime)]
+data = Kr_d9_prime
 chunks = divide_into_chunks(data,1000)
 # CM_one_sextic_from_Kr(chunks[0])
 
