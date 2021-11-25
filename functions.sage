@@ -138,7 +138,6 @@ def divide_into_chunks(L,n):
             Chunk_list.append(r)
     return Chunk_list
 
-@parallel(4)
 def CM_one_from_partial_Kr(Kr_list,x):
     Kr_list_short = []
     for i in range(x[0],x[1]):

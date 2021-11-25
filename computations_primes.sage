@@ -11,9 +11,10 @@ def make_prime_list(start,end):
 def compute_max_hk(p_list):
     hk_list = []
     for p in p_list:
-        k.<a> = QuadraticField(-p)
-        hk = k.class_number()
-        hk_list.append(hk)
+        if p % 4 != 1:
+            k.<a> = QuadraticField(-p)
+            hk = k.class_number()
+            hk_list.append(hk)
     return(max(hk_list))
 
 @parallel(30)
