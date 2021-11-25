@@ -5,16 +5,16 @@ def make_prime_list(start,end):
     primes = []
     while q < end:
         q = next_prime(q)
-        primes.append(q)
+        if q % 4 != 1:
+            primes.append(q)
     return primes
 
 def compute_max_hk(p_list):
     hk_list = []
     for p in p_list:
-        if p % 4 != 1:
-            k.<a> = QuadraticField(-p)
-            hk = k.class_number()
-            hk_list.append(hk)
+        k.<a> = QuadraticField(-p)
+        hk = k.class_number()
+        hk_list.append(hk)
     return(max(hk_list))
 
 @parallel(30)
@@ -26,7 +26,7 @@ def list_of_max_hk(primes_chunks):
     return(max_hk)
 
 primes = make_prime_list(1,1000000)
-primes_chunks = divide_into_chunks(primes,10000)
+primes_chunks = divide_into_chunks(primes,1000)
 max_hk_list = list_of_max_hk(primes_chunks)
 h = 1
 for i in max_hk_list:
