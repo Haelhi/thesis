@@ -1,5 +1,7 @@
 load('functions.sage')
 
+pari.allocatemem(83613065216)
+
 def make_prime_list(start,end):
     q = start
     primes = []
@@ -25,8 +27,8 @@ def list_of_max_hk(primes_chunks):
         max_hk.append(hk_chunk)
     return(max_hk)
 
-primes = make_prime_list(100000000,200000000)
-primes_chunks = divide_into_chunks(primes,10000)
+primes = make_prime_list(100000000,150000000)
+primes_chunks = divide_into_chunks(primes,1000)
 max_hk_list = list_of_max_hk(primes_chunks)
 h = 1
 for i in max_hk_list:
