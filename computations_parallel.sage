@@ -27,7 +27,7 @@ o = open('parallel_OUTPUT.sage','a')
 o.write('K_d9_prime = [')
 o.close()
 
-data = Kr_d9_prime[360:600]
+data = Kr_d9_prime[600:800]
 chunks = divide_into_chunks(data,240)
 # CM_one_sextic_from_Kr(chunks[0])
 
