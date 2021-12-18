@@ -32,7 +32,7 @@ def construct_Kr_1(quartic):
     return Kr_list
 
 
-# CASE 2: dKr/dKrplus^2 == p and just use k = QQ(sqrt(-p))
+# CASE 2: dKr/dKrplus^2 == p^2 and just use k = QQ(sqrt(-p))
 # Function construct_Kr: computes composite field Kr = kKrplus with all k such that dk|dKrplus 
 # INPUT: LMFDB output list of quartic fields
 # OUTPUT: list with elements [polynomial of Kr, polynomial of k, class number of Krplus]
@@ -260,3 +260,52 @@ def K_cm_clno_one_list(K_list):
             hk = k.class_number()
             list_CM_one.append([K.polynomial(),hK,hk,hKrstar])
     return(list_CM_one)
+
+# ----------------------- COUNT NUMBER OF RAMIFYING PRIMES tK IN K/Kplus -------------------------
+# INPUT: relative number field F, absolute number field Fplus
+# OUTPUT: number of primes in Fplus that ramify in F
+def count_tF(F,Fplus):
+    dF = F.absolute_discriminant()
+    dFplus = Fplus.absolute_discriminant()
+    d = dF / dFplus^2
+    d_list = list(d.factor())
+    tF = 0
+    for p_div in d_list:
+        p = p_div[0]
+        p_power = p_div[1]
+        ideal_p_list = list(Fplus.ideal(p).factor())
+        for P_tup in ideal_p_list:
+            P = P_tup[0]
+            P_power = P_tup[1]
+            ideal_F_list = list(F.ideal(P).factor())
+            for P_F in ideal_F_list:
+                P_F_power = P_F[1]
+                if P_F_power > 1:
+                    tF = tF + 1
+    return(tF)
+    
+    
+# ----------------------- CHECK IF FRACTION OF INDICES OF hKrstar AND hk IS A POWER OF TWO -------------------------
+# INPUT: octic CM-field Kr of K
+# OUTPUT: True if index fraction is a power of two, False otherwise
+def check_indices_poweroftwo(Kr):
+    for i in Kr.subfields():
+        if i[0].degree() == 4:
+            Krplus.<b> = i[0]
+        if i[0].degree() == 2:
+            k.<c> = i[0]
+    Kr_rel.<e> = Krplus.extension(k.polynomial())
+    tKr = count_tF(Kr_rel,Krplus)
+    hKr = Kr.class_number()
+    hKrplus = Krplus.class_number()
+    hKrstar = hKr / hKrplus
+    index_Kr = hKrstar / 2^(tKr)
+    hk = k.class_number()
+    dk = k.disc()
+    tk = len(list(dk.factor()))
+    index_k = hk / 2^(tk - 1)
+    index_fract = index_Kr/index_k
+    for p in list(index_fract.factor()):
+        if p[0] != 1 and p[0] % 2 == 1:
+            return False
+    return True
