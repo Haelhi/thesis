@@ -16,14 +16,14 @@ Kr_list_red_prime = []
 
 for l in Kr_list_one:
     Kr.<a> = NumberField(l[0])
-    check = check_indices_poweroftwo(Kr)
+    check = check_indices_poweroftwo(Kr,l[2])
     print(check)
     if check == True:
         Kr_list_red_one.append(l)
         
 for l in Kr_list_prime:
     Kr.<a> = NumberField(l[0])
-    check = check_indices_poweroftwo(Kr)
+    check = check_indices_poweroftwo(Kr,l[2])
     print(check)
     if check == True:
         Kr_list_red_prime.append(l)

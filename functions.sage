@@ -32,7 +32,7 @@ def construct_Kr_1(quartic):
     return Kr_list
 
 
-# CASE 2: dKr/dKrplus^2 == p^2 and just use k = QQ(sqrt(-p))
+# ALL CASES WHERE dk = -p AND p DIVIDES dKrplus
 # Function construct_Kr: computes composite field Kr = kKrplus with all k such that dk|dKrplus 
 # INPUT: LMFDB output list of quartic fields
 # OUTPUT: list with elements [polynomial of Kr, polynomial of k, class number of Krplus]
@@ -42,6 +42,7 @@ def construct_Kr_complete(quartic):
     Kr_list_prime = []
     for poly in quartic:
         Krplus.<a> = NumberField(poly)
+        hKrplus = Krplus.class_number()
         R.<t> = PolynomialRing(Krplus)
         dKrplus = Krplus.discriminant()
         primes = list(dKrplus.factor())
@@ -54,9 +55,39 @@ def construct_Kr_complete(quartic):
                     Kr.<z> = kKrplus.absolute_field()
                     dKr = Kr.discriminant()
                     if dKr/dKrplus^2 == 1:
-                            Kr_list_one.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+                            Kr_list_one.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
                     if dKr/dKrplus^2 != 1:
-                            Kr_list_prime.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),Krplus.class_number()])
+                            Kr_list_prime.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
+    return (Kr_list_one, Kr_list_prime)
+    
+    
+# LIST OF Kr SUCH THAT dk DIVIDES dKrplus AND THE FRACTION OF INDICES IS A POWER OF 2
+# Function construct_Kr: computes composite field Kr = kKrplus with all k such that dk|dKrplus 
+# INPUT: list of quartic fields Krplus
+# OUTPUT: list with elements [polynomial of Kr, polynomial of k, class number of Krplus]
+
+def construct_Kr_reduced(quartic):
+    Kr_list_one = []
+    Kr_list_prime = []
+    for poly in quartic:
+        Krplus.<a> = NumberField(poly)
+        hKrplus = Krplus.class_number()
+        R.<t> = PolynomialRing(Krplus)
+        dKrplus = Krplus.discriminant()
+        primes = list(dKrplus.factor())
+        for P in primes:
+            if P[0] % 4 == 3 or P[0] == 2:
+                k.<b> = QuadraticField(-P[0])
+                dk = k.discriminant()
+                if dKrplus % dk == 0:
+                    kKrplus.<y> = Krplus.extension(k.polynomial())
+                    Kr.<z> = kKrplus.absolute_field()
+                    dKr = Kr.discriminant()
+                    check = check_indices_poweroftwo(Kr,hKrplus)
+                    if dKr/dKrplus^2 == 1 and check[0] == True:
+                            Kr_list_one.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
+                    if dKr/dKrplus^2 != 1 and check[0] == True:
+                            Kr_list_prime.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
     return (Kr_list_one, Kr_list_prime)
 
 # ----------------------- PARALLEL: COMPUTE K AND WRITE IN FILE ---------------------------
@@ -286,9 +317,9 @@ def count_tF(F,Fplus):
     
     
 # ----------------------- CHECK IF FRACTION OF INDICES OF hKrstar AND hk IS A POWER OF TWO -------------------------
-# INPUT: octic CM-field Kr of K
+# INPUT: octic CM-field Kr of K, class number of Krplus
 # OUTPUT: True if index fraction is a power of two, False otherwise
-def check_indices_poweroftwo(Kr):
+def check_indices_poweroftwo(Kr,hKrplus):
     for i in Kr.subfields():
         if i[0].degree() == 4:
             Krplus.<b> = i[0]
@@ -297,7 +328,6 @@ def check_indices_poweroftwo(Kr):
     Kr_rel.<e> = Krplus.extension(k.polynomial())
     tKr = count_tF(Kr_rel,Krplus)
     hKr = Kr.class_number()
-    hKrplus = Krplus.class_number()
     hKrstar = hKr / hKrplus
     index_Kr = hKrstar / 2^(tKr)
     hk = k.class_number()
@@ -308,4 +338,4 @@ def check_indices_poweroftwo(Kr):
     for p in list(index_fract.factor()):
         if p[0] != 1 and p[0] % 2 == 1:
             return False
-    return True
+    return (True,index_fract.factor())
