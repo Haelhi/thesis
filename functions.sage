@@ -337,5 +337,5 @@ def check_indices_poweroftwo(Kr,hKrplus):
     index_fract = index_Kr/index_k
     for p in list(index_fract.factor()):
         if p[0] != 1 and p[0] % 2 == 1:
-            return False
+            return (False,0)
     return (True,index_fract.factor())

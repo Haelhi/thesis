@@ -14,27 +14,24 @@ def parallel_reduce(list_of_chunks):
     for l in list_of_chunks:
         Kr.<a> = NumberField(l[0])
         check = check_indices_poweroftwo(Kr,l[2])
-        print(check)
-        if check == True:
-            print(l)
-            list_Kr.append(l)
-    return list_Kr
-
-print(datetime.now())
+        if check[0]:
+            return((check[0],l))
 
 o = open('output_Kr_red.sage','a')
 o.write('K_d8_prime = [')
 o.close()
 
 data = Kr_d8_prime
-n = ceil(len(Kr_d8_prime)/2)
-chunks = divide_into_chunks(data,n)
+chunks = divide_into_chunks(data,len(data))
 
 for x in parallel_reduce(chunks):
-    o = open('output_Kr_red.sage','a')
-    o.write(str(list(x)[0][0][0][0]))
-    o.write(',')
-    o.close()
+    check = list(x)[1]
+    print(check)
+    if check != None:
+        o = open('output_Kr_red.sage','a')
+        o.write(str(list(x)[1][1]))
+        o.write(',')
+        o.close()
     
 o = open('output_Kr_red.sage','a')
 o.write(']')
