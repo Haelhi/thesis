@@ -1,4 +1,4 @@
-from recip import *
+load("https://bitbucket.org/mstreng/recip/raw/master/recip_online.sage")
 from datetime import datetime 
 
 load('functions.sage')
