@@ -20,15 +20,21 @@ def parallel_reduce(list_of_chunks):
             list_Kr.append(l)
     return list_Kr
 
+print(datetime.now())
+
 o = open('output_Kr_red.sage','a')
 o.write('K_d8_prime = [')
 o.close()
 
 data = Kr_d8_prime
-chunks = divide_into_chunks(data,len(Kr_d8_prime))
+n = ceil(len(Kr_d8_prime)/2)
+chunks = divide_into_chunks(data,n)
 
 for x in parallel_reduce(chunks):
-    print(list(x))
+    o = open('output_Kr_red.sage','a')
+    o.write(str(list(x)[0][0][0][0]))
+    o.write(',')
+    o.close()
     
 o = open('output_Kr_red.sage','a')
 o.write(']')
