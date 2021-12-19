@@ -1,33 +1,36 @@
-load("https://bitbucket.org/mstreng/recip/raw/master/recip_online.sage")
-load('Data/Kr_d9_p_div_dKplus.sage')
-
-from itertools import combinations
-from datetime import datetime
-
-pari.allocatemem(83613065216)
+from recip import *
+from datetime import datetime 
 
 load('functions.sage')
+load('Data/Kr_d7_p_div_dKplus.sage')
+load('Data/Kr_d8_p_div_dKplus.sage')
+load('Data/Kr_d9_p_div_dKplus.sage')
 
-Kr_list_one = Kr_d9_one
-Kr_list_prime = Kr_d9_prime
+# INPUT: list of chunks (output of divide_into_chunks)
+# OUTPUT: parallel output with Kr reduced
+@parallel(30)
+def parallel_reduce(list_of_chunks):
+    list_Kr = []
+    for l in list_of_chunks:
+        Kr.<a> = NumberField(l[0])
+        check = check_indices_poweroftwo(Kr,l[2])
+        print(check)
+        if check == True:
+            print(l)
+            list_Kr.append(l)
+    return list_Kr
 
-Kr_list_red_one = []
-Kr_list_red_prime = []
+o = open('output_Kr_red.sage','a')
+o.write('K_d8_prime = [')
+o.close()
 
-for l in Kr_list_one:
-    Kr.<a> = NumberField(l[0])
-    check = check_indices_poweroftwo(Kr,l[2])
-    print(check)
-    if check == True:
-        Kr_list_red_one.append(l)
-        
-for l in Kr_list_prime:
-    Kr.<a> = NumberField(l[0])
-    check = check_indices_poweroftwo(Kr,l[2])
-    print(check)
-    if check == True:
-        Kr_list_red_prime.append(l)
-        
-print(Kr_list_red_one)
-print('---------------')
-print(Kr_list_red_prime)
+data = Kr_d8_prime
+chunks = divide_into_chunks(data,len(Kr_d8_prime))
+
+for x in parallel_reduce(chunks):
+    print(list(x))
+    
+o = open('output_Kr_red.sage','a')
+o.write(']')
+o.write('\n\n\n')
+o.close()
