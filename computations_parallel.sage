@@ -24,16 +24,16 @@ def parallel_comp(list_of_chunks):
 print(datetime.now())
 
 o = open('parallel_OUTPUT.sage','a')
-o.write('K_d9_prime = [')
+o.write('K_d10_one = [')
 o.close()
 
-data = Kr_d9_one
+data = Kr_d10_one
 chunks = divide_into_chunks(data,len(data))
 
 for x in parallel_comp(chunks):
     print(list(x))
     
-o = open('parallel_output.sage','a')
+o = open('parallel_OUTPUT.sage','a')
 o.write(']')
 o.write('\n\n\n')
 o.close()
