@@ -17,23 +17,23 @@ def parallel_reduce(list_of_chunks):
         if check[0]:
             return((check[0],l))
 
-o = open('output_d8_prime.sage','a')
+o = open('output_d9_prime.sage','a')
 o.write('K_d8_prime = [')
 o.close()
 
-data = Kr_d8_prime
+data = Kr_d9_prime
 chunks = divide_into_chunks(data,len(data))
 
 for x in parallel_reduce(chunks):
     check = list(x)[1]
     print(check)
     if check != None:
-        o = open('output_d8_prime.sage','a')
+        o = open('output_d9_prime.sage','a')
         o.write(str(list(x)[1][1]))
         o.write(',')
         o.close()
     
-o = open('output_d8_prime.sage','a')
+o = open('output_d9_prime.sage','a')
 o.write(']')
 o.write('\n\n\n')
 o.close()
