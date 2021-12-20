@@ -3,12 +3,12 @@ load("https://bitbucket.org/mstreng/recip/raw/master/recip_online.sage")
 from itertools import combinations
 from datetime import datetime
 
-pari.allocatemem(80000000000)
+# pari.allocatemem(80000000000)
 
 load('functions.sage')
 load('Data/Kr_d7_p_div_dKplus.sage')
 load('Data/Kr_d8_p_div_dKplus.sage')
-load('Data/Kr_d9_p_div_dKplus.sage')
+load('Data/Kr_d9_p_div_dKplus_red.sage')
 
 # INPUT: list of chunks (output of divide_into_chunks)
 # OUTPUT: parallel output with K
@@ -27,9 +27,8 @@ o = open('parallel_OUTPUT.sage','a')
 o.write('K_d9_prime = [')
 o.close()
 
-data = Kr_d9_prime[600:800]
-chunks = divide_into_chunks(data,240)
-# CM_one_sextic_from_Kr(chunks[0])
+data = Kr_d9_one
+chunks = divide_into_chunks(data,len(data))
 
 for x in parallel_comp(chunks):
     print(list(x))
