@@ -83,7 +83,7 @@ def construct_Kr_reduced(quartic):
                     kKrplus.<y> = Krplus.extension(k.polynomial())
                     Kr.<z> = kKrplus.absolute_field()
                     dKr = Kr.discriminant()
-                    check = check_indices_poweroftwo(Kr,hKrplus)
+                    check = check_2hKrstar_div_hk_poweroftwo(Kr.polynomial(),k.polynomial(),hKrplus)
                     if dKr/dKrplus^2 == 1 and check[0] == True:
                             Kr_list_one.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
                     if dKr/dKrplus^2 != 1 and check[0] == True:
@@ -132,7 +132,7 @@ def CM_one_sextic_from_Kr(Kr_list):
         print(Kr_pol[0])
         print(j)
         Kr = CM_Field(Kr_pol[0])
-        clKr = Kr.class_group()
+        clKr = Kr.class_group(False)
         gens = clKr.gens()
         rep_gens = []
         for I in gens:
@@ -327,10 +327,10 @@ def check_indices_poweroftwo(Kr,hKrplus):
             k.<c> = i[0]
     Kr_rel.<e> = Krplus.extension(k.polynomial())
     tKr = count_tF(Kr_rel,Krplus)
-    hKr = Kr.class_number()
+    hKr = Kr.class_number(False)
     hKrstar = hKr / hKrplus
     index_Kr = hKrstar / 2^(tKr)
-    hk = k.class_number()
+    hk = k.class_number(False)
     dk = k.disc()
     tk = len(list(dk.factor()))
     index_k = hk / 2^(tk - 1)
@@ -339,3 +339,18 @@ def check_indices_poweroftwo(Kr,hKrplus):
         if p[0] != 1 and p[0] % 2 == 1:
             return (False,0)
     return (True,index_fract.factor())
+    
+# ----------------------- CHECK IF 2hKrstar / hk IS A POWER OF TWO -------------------------
+# INPUT: [polynomial Kr, polynomial k, hKrplus]
+# OUTPUT: True if index fraction is a power of two, False otherwise
+def check_2hKrstar_div_hk_poweroftwo(poly_Kr, poly_k, hKrplus):
+    Kr.<a> = NumberField(poly_Kr)
+    k.<b> = NumberField(poly_k)
+    hKr = Kr.class_number(False)
+    hKrstar = hKr / hKrplus
+    hk = k.class_number(False)
+    h = 2*hKrstar / hk
+    for p in list(h.factor()):
+        if p[0] % 2 == 1:
+            return (False,0)
+    return (True,h.factor())
