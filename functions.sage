@@ -93,7 +93,7 @@ def construct_Kr_red(quartic):
 def construct_Kr_red_write(quartic):
     for poly in quartic:
         Krplus.<a> = NumberField(poly)
-        hKrplus = Krplus.class_number()
+        hKrplus = Krplus.class_number(False)
         R.<t> = PolynomialRing(Krplus)
         dKrplus = Krplus.discriminant()
         primes = list(dKrplus.factor())
@@ -114,7 +114,6 @@ def construct_Kr_red_write(quartic):
                             o = open('Data/output_Kr_prime.sage', 'a')
                             o.write(str([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus]))
                             o.close()
-    return (Kr_list_one, Kr_list_prime)
 
 # ----------------------- PARALLEL: COMPUTE K AND WRITE IN FILE ---------------------------
 
