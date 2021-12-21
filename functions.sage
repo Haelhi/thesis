@@ -108,11 +108,11 @@ def construct_Kr_red_write(quartic):
                     check = check_2hKrstar_div_hk_poweroftwo(Kr.polynomial(),k.polynomial(),hKrplus)
                     if dKr/dKrplus^2 == 1 and check[0] == True:
                             o = open('Data/output_Kr_one.sage', 'a')
-                            o.write([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
+                            o.write(str([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus]))
                             o.close()
                     if dKr/dKrplus^2 != 1 and check[0] == True:
                             o = open('Data/output_Kr_prime.sage', 'a')
-                            o.write([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
+                            o.write(str([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus]))
                             o.close()
     return (Kr_list_one, Kr_list_prime)
 
