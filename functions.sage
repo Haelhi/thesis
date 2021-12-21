@@ -91,6 +91,12 @@ def construct_Kr_red(quartic):
     return (Kr_list_one, Kr_list_prime)
     
 def construct_Kr_red_write(quartic):
+    o = open('Data/output_Kr_one.sage', 'a')
+    o.write('[')
+    o.close()
+    o = open('Data/output_Kr_prime.sage', 'a')
+    o.write('[')
+    o.close()
     for poly in quartic:
         Krplus.<a> = NumberField(poly)
         hKrplus = Krplus.class_number(False)
@@ -109,11 +115,19 @@ def construct_Kr_red_write(quartic):
                     if dKr/dKrplus^2 == 1 and check[0] == True:
                             o = open('Data/output_Kr_one.sage', 'a')
                             o.write(str([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus]))
+                            o.write(',')
                             o.close()
                     if dKr/dKrplus^2 != 1 and check[0] == True:
                             o = open('Data/output_Kr_prime.sage', 'a')
                             o.write(str([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus]))
+                            o.write(',')
                             o.close()
+    o = open('Data/output_Kr_one.sage', 'a')
+    o.write(']')
+    o.close()
+    o = open('Data/output_Kr_prime.sage', 'a')
+    o.write(']')
+    o.close()
 
 # ----------------------- PARALLEL: COMPUTE K AND WRITE IN FILE ---------------------------
 
