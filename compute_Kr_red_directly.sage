@@ -8,4 +8,4 @@ pari.allocatemem(83613065216)
 
 quartic = quartic10
 
-(Kr_one,Kr_prime) = construct_Kr_red_write(quartic)
+construct_Kr_red_write(quartic)
