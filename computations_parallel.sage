@@ -9,6 +9,7 @@ load('functions.sage')
 load('Data/Kr_d7_p_div_dKplus.sage')
 load('Data/Kr_d8_p_div_dKplus.sage')
 load('Data/Kr_d9_p_div_dKplus_red.sage')
+load('Data/Kr_d10_p_div_dKplus_red.sage')
 
 # INPUT: list of chunks (output of divide_into_chunks)
 # OUTPUT: parallel output with K
