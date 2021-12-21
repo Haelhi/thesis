@@ -66,7 +66,7 @@ def construct_Kr_complete(quartic):
 # INPUT: list of quartic fields Krplus
 # OUTPUT: list with elements [polynomial of Kr, polynomial of k, class number of Krplus]
 
-def construct_Kr_reduced(quartic):
+def construct_Kr_red(quartic):
     Kr_list_one = []
     Kr_list_prime = []
     for poly in quartic:
@@ -88,6 +88,32 @@ def construct_Kr_reduced(quartic):
                             Kr_list_one.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
                     if dKr/dKrplus^2 != 1 and check[0] == True:
                             Kr_list_prime.append([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
+    return (Kr_list_one, Kr_list_prime)
+    
+def construct_Kr_red_write(quartic):
+    for poly in quartic:
+        Krplus.<a> = NumberField(poly)
+        hKrplus = Krplus.class_number()
+        R.<t> = PolynomialRing(Krplus)
+        dKrplus = Krplus.discriminant()
+        primes = list(dKrplus.factor())
+        for P in primes:
+            if P[0] % 4 == 3 or P[0] == 2:
+                k.<b> = QuadraticField(-P[0])
+                dk = k.discriminant()
+                if dKrplus % dk == 0:
+                    kKrplus.<y> = Krplus.extension(k.polynomial())
+                    Kr.<z> = kKrplus.absolute_field()
+                    dKr = Kr.discriminant()
+                    check = check_2hKrstar_div_hk_poweroftwo(Kr.polynomial(),k.polynomial(),hKrplus)
+                    if dKr/dKrplus^2 == 1 and check[0] == True:
+                            o = open('Data/output_Kr_one.sage', 'a')
+                            o.write([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
+                            o.close()
+                    if dKr/dKrplus^2 != 1 and check[0] == True:
+                            o = open('Data/output_Kr_prime.sage', 'a')
+                            o.write([pari(Kr.polynomial()).polredabs(),pari(k.polynomial()).polredabs(),hKrplus])
+                            o.close()
     return (Kr_list_one, Kr_list_prime)
 
 # ----------------------- PARALLEL: COMPUTE K AND WRITE IN FILE ---------------------------

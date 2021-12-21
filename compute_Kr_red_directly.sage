@@ -8,7 +8,7 @@ pari.allocatemem(83613065216)
 
 quartic = quartic10
 
-(Kr_one,Kr_prime) = construct_Kr_reduced(quartic)
+(Kr_one,Kr_prime) = construct_Kr_red_write(quartic)
 
 o = open('Data/Kr_d10_p_div_dKplus_red.sage', 'a')
 o.write('Kr_d10_one = [')
