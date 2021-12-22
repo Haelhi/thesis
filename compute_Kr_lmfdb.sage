@@ -43,7 +43,7 @@ o.write('Kr_d7_tk1 = [')
 o.close()
 
 quadratic = k_tk1
-quartic = quartic7[0:1]
+quartic = quartic7
 chunks = divide_into_chunks(quartic,len(quartic))
 
 for x in Kr_from_k_parallel(quadratic,chunks):
