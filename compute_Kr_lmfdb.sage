@@ -45,7 +45,7 @@ o.write('Kr_d7_tk1 = [')
 o.close()
 
 quadratic = k_tk1
-quartic = quartic71
+quartic = quartic7
 list_Krplus_k = make_chunks(quadratic,quartic)
 n = len(list_Krplus_k)
 chunks = divide_into_chunks(list_Krplus_k,n)
