@@ -28,7 +28,7 @@ def make_chunks(k_list,Krplus_list):
             comp_list.append([Krplus,k[1],k[3]])
     return(comp_list)
 
-@parallel(2)
+@parallel(30)
 def Kr_from_k_parallel(list_of_chunks):
     chunks_Kr = []
     for poly in list_of_chunks:
@@ -40,24 +40,24 @@ def Kr_from_k_parallel(list_of_chunks):
     return(chunks_Kr)
 
 
-o = open('parallel_OUTPUT.sage','a')
+o = open('Kr_d7_tk1.sage','a')
 o.write('Kr_d7_tk1 = [')
 o.close()
 
-quadratic = k_tk1[0:5]
-quartic = quartic7[0:2]
+quadratic = k_tk1
+quartic = quartic71
 list_Krplus_k = make_chunks(quadratic,quartic)
 n = len(list_Krplus_k)
 chunks = divide_into_chunks(list_Krplus_k,n)
 
 for x in Kr_from_k_parallel(chunks):
     if x[1][0] != None:
-        o = open('parallel_OUTPUT.sage','a')
+        o = open('Kr_d7_tk1.sage','a')
         o.write(str(x[1][0]))
         o.write(',')
         o.close()
     
-o = open('parallel_OUTPUT.sage','a')
+o = open('Kr_d7_tk1.sage','a')
 o.write(']')
 o.write('\n\n\n')
 o.close()
