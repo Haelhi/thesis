@@ -20,10 +20,10 @@ o = open('output_Kr_lmfdb.sage', 'a')
 o.write('[')
 o.close()
 
-for i in quartic[0:1]:
-    for j in quadratic:
+for j in quadratic:
+    for i in quartic:
         Kr_data = construct_Kr_from_k_lmfdb(j[1],i,j[3])
-        if Kr_data[6] != None:
+        if Kr_data != None:
             o = open('output_Kr_lmfdb.sage', 'a')
             o.write(str(Kr_data))
             o.write(',')
