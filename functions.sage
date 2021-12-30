@@ -382,12 +382,10 @@ def check_indices_poweroftwo(Kr,hKrplus):
 # ----------------------- CHECK IF 2hKrstar / hk IS A POWER OF TWO -------------------------
 # INPUT: [polynomial Kr, polynomial k, hKrplus]
 # OUTPUT: True if index fraction is a power of two, False otherwise
-def check_2hKrstar_div_hk_poweroftwo(poly_Kr, poly_k, hKrplus):
+def check_2hKrstar_div_hk_poweroftwo(poly_Kr, poly_k, hKr, hKrplus, hk):
     Kr.<a> = NumberField(poly_Kr)
     k.<b> = NumberField(poly_k)
-    hKr = Kr.class_number(False)
     hKrstar = hKr / hKrplus
-    hk = k.class_number(False)
     h = 2*hKrstar / hk
     for p in list(h.factor()):
         if p[0] % 2 == 1:
