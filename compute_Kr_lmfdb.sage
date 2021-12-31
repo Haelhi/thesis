@@ -2,6 +2,8 @@ load('Data/data_quartics_A4.sage')
 load('Data/k_d5_tk1.sage')
 load('functions.sage')
 
+pari.allocatemem(83613065216)
+
 def construct_Kr_from_k_lmfdb(f_k,f_Krplus,hk):
     Krplus.<a> = NumberField(f_Krplus)
     hKrplus = Krplus.class_number(False)
