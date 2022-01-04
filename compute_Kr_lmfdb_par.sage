@@ -42,11 +42,11 @@ def Kr_from_k_parallel(list_of_chunks):
     return(chunks_Kr)
 
 
-o = open('Kr_d7_tk1.sage','a')
+o = open('Kr_d7_tk1_2000-3000.sage','a')
 o.write('Kr_d7_tk1 = [')
 o.close()
 
-quadratic = k_tk1[2500:3000]
+quadratic = k_tk1[2000:3000]
 quartic = quartic7
 list_Krplus_k = make_chunks(quadratic,quartic)
 n = len(list_Krplus_k)
@@ -54,12 +54,12 @@ chunks = divide_into_chunks(list_Krplus_k,n)
 
 for x in Kr_from_k_parallel(chunks):
     if x[1][0] != None:
-        o = open('Kr_d7_tk1_2500.sage','a')
+        o = open('Kr_d7_tk1_2000-3000.sage','a')
         o.write(str(x[1][0]))
         o.write(',')
         o.close()
     
-o = open('Kr_d7_tk1_2500.sage','a')
+o = open('Kr_d7_tk1_2000-3000.sage','a')
 o.write(']')
 o.write('\n\n\n')
 o.close()
