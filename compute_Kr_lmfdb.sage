@@ -15,7 +15,7 @@ def construct_Kr_from_k_lmfdb(f_k,f_Krplus,hk):
     if check[0]:
         return([pari.polredabs(Kr.polynomial()),f_Krplus,f_k,hKr,hKrplus,hk,check[1]])
 
-quadratic = k_tk1[2000:3000]
+quadratic = k_tk1[1500:2000]
 quartic = quartic7
 
 o = open('output_Kr_lmfdb.sage', 'a')
