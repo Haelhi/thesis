@@ -42,6 +42,7 @@ def comp_parallel(list_of_chunks):
         construct_Kr_from_k_lmfdb(k_tup,Krplus_tup)
 
 def construct_Kr_from_k_lmfdb(k_tup,Krplus_tup):
+    print(k_tup)
     Krplus_pol = Krplus_tup
     Krplus.<a> = NumberField(Krplus_pol)
     dKrplus = Krplus.disc()
@@ -62,7 +63,7 @@ def construct_Kr_from_k_lmfdb(k_tup,Krplus_tup):
                 if lst_h[0][0] == 2:
                     print([pari.polredabs(Kr.polynomial()),Krplus_pol,poly_k,hKr,hKrplus,hk], ',')
 
-quadratic = k_tk2[750:len(k_tk2)]
+quadratic = k_tk2[965:len(k_tk2)]
 quartic = quartic8
 prep_list = make_list(quadratic,quartic)
 chunks_k = divide_into_chunks(prep_list,len(prep_list))
