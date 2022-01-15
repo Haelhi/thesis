@@ -30,6 +30,7 @@ def prime_check_after_constr(fKr, fKrplus, dKrplus, dk):
 def make_list(quadratic,quartic):
     g_list = []
     for k_tup in quadratic:
+        print(k_tup)
         for Krplus_tup in quartic:
             g_list.append([k_tup,Krplus_tup])
     return g_list
@@ -38,7 +39,6 @@ def make_list(quadratic,quartic):
 def comp_parallel(list_of_chunks):
     for pair in list_of_chunks:
         k_tup = pair[0]
-        print(k_tup)
         Krplus_tup = pair[1]
         construct_Kr_from_k_lmfdb(k_tup,Krplus_tup)
 
