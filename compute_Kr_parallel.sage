@@ -38,11 +38,11 @@ def make_list(quadratic,quartic):
 def comp_parallel(list_of_chunks):
     for pair in list_of_chunks:
         k_tup = pair[0]
+        print(k_tup)
         Krplus_tup = pair[1]
         construct_Kr_from_k_lmfdb(k_tup,Krplus_tup)
 
 def construct_Kr_from_k_lmfdb(k_tup,Krplus_tup):
-    print(k_tup)
     Krplus_pol = Krplus_tup
     Krplus.<a> = NumberField(Krplus_pol)
     dKrplus = Krplus.disc()
