@@ -30,6 +30,7 @@ def elimination_wrt_decomposition_1_3_7_and_15(p, Krplus_min_poly, dKrplus, dk):
     
     T.<x> = PolynomialRing(GF(p))
     poly_over_finite = T(Krplus_min_poly)
+    Krplus.<y> = NumberField(Krplus_min_poly)
     # Eliminates fields with primes of type 1, 3, or 7:
     if len(poly_over_finite.factor()) == 1 and poly_over_finite.factor()[0][1] == 4:
         if len(Krplus.factor(p)) == 1 and Krplus.factor(p)[0][1] == 4:
@@ -45,7 +46,7 @@ def elimination_wrt_decomposition_1_3_7_and_15(p, Krplus_min_poly, dKrplus, dk):
     return True
     
 
-# We can use the following function AFTER we construct Kr. Prime p divides dKrplus but NOT dk. (You dont 
+# We can use the following function AFTER we construct Kr. Prime p divides dKrplus but NOT dk.
 # Unfortunately we don't eliminate much :/ 
 
 def elimination_wrt_decomposition_5_6_and_18(p, Kr_min_poly, dKrplus, dk): 
@@ -64,7 +65,7 @@ def elimination_wrt_decomposition_5_6_and_18(p, Kr_min_poly, dKrplus, dk):
 
     OUTPUT:
 
-    - Returns True if there are no primes in Kr/Q with decomposition type 5, 6 or 18 as in Table ??
+    - Returns True if p does not have decomposition type 5, 6 or 18 as in Table ??
 
     """
     
@@ -74,6 +75,7 @@ def elimination_wrt_decomposition_5_6_and_18(p, Kr_min_poly, dKrplus, dk):
     
     T.<x> = PolynomialRing(GF(p))
     Kr_poly_over_finite = T(Kr_min_poly)
+    Kr.<y> = NumberField(Kr_min_poly)
     # Eliminates fields with primes of type 5, 6 or 18:
     if len(Kr_poly_over_finite.factor()) == 2 and Kr_poly_over_finite.factor()[0][1] == 4:
         if len(Kr.factor(p)) == 2 and Kr.factor(p)[0][1] == 4:
@@ -102,7 +104,7 @@ def elimination_wrt_decomposition_19(p, Krplus_min_poly, Kr_min_poly, dKrplus, d
 
     OUTPUT:
 
-    - Returns True if there are primes in Kr/Q with decomposition type 19 as in Table ??
+    - Returns True if p does not have decomposition type 19 as in Table ??
 
     """
     
@@ -113,6 +115,8 @@ def elimination_wrt_decomposition_19(p, Krplus_min_poly, Kr_min_poly, dKrplus, d
     T.<x> = PolynomialRing(GF(p))
     Kr_poly_over_finite = T(Kr_min_poly)
     Krplus_poly_over_finite = T(Krplus_min_poly)
+    Kr.<y> = NumberField(Kr_min_poly)
+    Krplus.<y> = NumberField(Krplus_min_poly)
     # Eliminates fields with primes of type 19:
     if len(Krplus_poly_over_finite.factor()) == 2 and Kr_poly_over_finite.factor()[0][1] == 4:
         if len(Krplus.factor(p)) == 2 and Kr.factor(p)[0][1] == 4:
