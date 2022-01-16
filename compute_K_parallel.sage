@@ -42,7 +42,7 @@ def parallel_comp(list_of_chunks):
     for chunk in list_of_chunks:
         CM_one_sextic_from_Kr_print(chunk)
 
-data = Kr_tk2_q7
+data = Kr_tk2_q7[29:len(Kr_tk2_q7)]
 chunks = divide_into_chunks(data,len(data))
 list(parallel_comp(chunks))
     
