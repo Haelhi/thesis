@@ -63,8 +63,8 @@ def construct_Kr_from_k_lmfdb(k_tup,Krplus_tup):
                 if lst_h[0][0] == 2:
                     print([pari.polredabs(Kr.polynomial()),Krplus_pol,poly_k,hKr,hKrplus,hk], ',')
 
-quadratic = k_tk2[965:len(k_tk2)]
-quartic = quartic8
+quadratic = k_tk3
+quartic = quartic7
 prep_list = make_list(quadratic,quartic)
 chunks_k = divide_into_chunks(prep_list,len(prep_list))
 list(comp_parallel(chunks_k))
