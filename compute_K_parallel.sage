@@ -45,7 +45,7 @@ def parallel_comp(list_of_chunks):
         except Exception:
             print('Error in', chunk)
 
-data = Kr_tk2_q8[0:50]
+data = Kr_tk2_q8[50:100]
 chunks = divide_into_chunks(data,len(data))
 list(parallel_comp(chunks))
     
