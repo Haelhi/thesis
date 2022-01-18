@@ -57,7 +57,7 @@ def construct_Kr_from_k_lmfdb(k_tup,Krplus_tup):
         fKr = Kr.polynomial()
         if prime_check_after_constr(fKr, Krplus_pol, dKrplus, dk) == True:
             h = hKr / hKrplus
-            lst_h = list((2*h/hk).factor())
+            lst_h = list((4*h/hk).factor())
             if len(lst_h) == 1:
                 if lst_h[0][0] == 2:
                     print([pari.polredabs(Kr.polynomial()),Krplus_pol,poly_k,hKr,hKrplus,hk], ',')
