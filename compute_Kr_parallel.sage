@@ -39,6 +39,7 @@ def comp_parallel(list_of_chunks):
     for pair in list_of_chunks:
         k_tup = pair[0]
         Krplus_tup = pair[1]
+        
         construct_Kr_from_k_lmfdb(k_tup,Krplus_tup)
 
 def construct_Kr_from_k_lmfdb(k_tup,Krplus_tup):
@@ -53,15 +54,18 @@ def construct_Kr_from_k_lmfdb(k_tup,Krplus_tup):
     if prime_check_before_constr(Krplus_pol,dKrplus,dk) == True:
         Kr_rel.<b> = Krplus.extension(poly_k)
         Kr.<c> = Kr_rel.absolute_field()
-        hKr = Kr.class_number(False)
-        fKr = Kr.polynomial()
-        if prime_check_after_constr(fKr, Krplus_pol, dKrplus, dk) == True:
-            h = hKr / hKrplus
-            lst_h = list((4*h/hk).factor())
-            if len(lst_h) == 1:
-                if lst_h[0][0] == 2:
-                    print([pari.polredabs(Kr.polynomial()),Krplus_pol,poly_k,hKr,hKrplus,hk], ',')
-
+        try:
+            hKr = Kr.class_number(False)
+            fKr = Kr.polynomial()
+            if prime_check_after_constr(fKr, Krplus_pol, dKrplus, dk) == True:
+                h = hKr / hKrplus
+                lst_h = list((4*h/hk).factor())
+                if len(lst_h) == 1:
+                    if lst_h[0][0] == 2:
+                        print([pari.polredabs(Kr.polynomial()),Krplus_pol,poly_k,hKr,hKrplus,hk], ',')
+        except Exception:
+            print('error in', fKr)
+            
 quadratic = k_tk3[415:len(k_tk3)]
 quartic = quartic7
 prep_list = make_list(quadratic,quartic)
