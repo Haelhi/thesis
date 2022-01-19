@@ -3,7 +3,6 @@ load('Data/k_d5_tk2.sage')
 load('Data/k_d5_tk3.sage')
 load('functions.sage')
 load('elimination_wrt_decomposition.sage')
-from datetime import datetime
 
 def prime_check_before_constr(Krplus_pol, dKrplus,dk):
     for prime in list(dKrplus.factor()):
