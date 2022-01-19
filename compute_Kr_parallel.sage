@@ -65,7 +65,7 @@ def construct_Kr_from_k_lmfdb(k_tup,Krplus_tup):
         except Exception:
             print('error in', fKr)
             
-quadratic = k_tk3[300:500]
+quadratic = k_tk3[500:len(k_tk3)]
 quartic = quartic8
 prep_list = make_list(quadratic,quartic)
 chunks_k = divide_into_chunks(prep_list,len(prep_list))
