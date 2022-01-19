@@ -33,7 +33,7 @@ def make_list(quadratic,quartic):
             g_list.append([k_tup,Krplus_tup])
     return g_list
 
-@parallel(16)
+@parallel(32)
 def comp_parallel(list_of_chunks):
     for pair in list_of_chunks:
         k_tup = pair[0]
