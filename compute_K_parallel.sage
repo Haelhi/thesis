@@ -21,13 +21,12 @@ def CM_one_sextic_from_Kr_print(Kr_list):
     Phir_set = Kr.CM_types(equivalence_classes=True)
     i = 0
     for Phir in Phir_set:
-        print("Phir")
         i = i + 1
         if test_CM_cl_nr_one_with_class_group(rep_gens, Phir) == True:
             K = Phir.reflex_field()
             print(K.polynomial())
             if K.g() == 3:
-                print([pari.polredabs(K.polynomial()),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
+                print([pari.polredabs(K.polynomial()),Kr_pol[0],Kr_pol[1],Kr_pol[2]], ',')
                 K_list.append([pari.polredabs(K.polynomial()),Kr_pol[0],Kr_pol[1],Kr_pol[2]])
                 break
         if i == 6:
@@ -45,7 +44,7 @@ def parallel_comp(list_of_chunks):
         except Exception:
             print('Error in', chunk)
 
-data = Kr_tk2_q8[50:100]
+data = Kr_tk2_q8[100:len(Kr_tk2_18)]
 chunks = divide_into_chunks(data,len(data))
 list(parallel_comp(chunks))
     
