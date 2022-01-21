@@ -81,7 +81,7 @@ def construct_Kr_from_k_lmfdb_h(k_tup,Krplus_tup):
         hKr = Kr.class_number(False)
         fKr = Kr.polynomial()
         if prime_check_after_constr(fKr, Krplus_pol, dKrplus, dk) == True:
-            print([pari.polredabs(Kr.polynomial()),Krplus_pol,poly_k,hKr,hKrplus,hk], ',')
+            print([pari.polredabs(Kr.polynomial()),Krplus_pol,poly_k,hKr,hKrplus,hk], ',\\')
             
 quadratic = k_tk1
 quartic = quartic8
