@@ -1,4 +1,5 @@
 load('Data/data_quartics_A4.sage')
+load('Data/k_d5_tk1.sage')
 load('Data/k_d5_tk2.sage')
 load('Data/k_d5_tk3.sage')
 load('functions.sage')
@@ -39,7 +40,7 @@ def comp_parallel(list_of_chunks):
         k_tup = pair[0]
         Krplus_tup = pair[1]
         
-        construct_Kr_from_k_lmfdb(k_tup,Krplus_tup)
+        construct_Kr_from_k_lmfdb_h(k_tup,Krplus_tup)
 
 def construct_Kr_from_k_lmfdb(k_tup,Krplus_tup):
     Krplus_pol = Krplus_tup
@@ -64,8 +65,25 @@ def construct_Kr_from_k_lmfdb(k_tup,Krplus_tup):
                         print([pari.polredabs(Kr.polynomial()),Krplus_pol,poly_k,hKr,hKrplus,hk], ',')
         except Exception:
             print('error in', fKr)
+
+def construct_Kr_from_k_lmfdb_h(k_tup,Krplus_tup):
+    Krplus_pol = Krplus_tup
+    Krplus.<a> = NumberField(Krplus_pol)
+    dKrplus = Krplus.disc()
+    poly_k = k_tup[1]
+    dk = k_tup[2]
+    k.<a> = NumberField(poly_k)
+    hk = k.class_number(False)
+    hKrplus = Krplus.class_number(False)
+    if prime_check_before_constr(Krplus_pol,dKrplus,dk) == True:
+        Kr_rel.<b> = Krplus.extension(poly_k)
+        Kr.<c> = Kr_rel.absolute_field()
+        hKr = Kr.class_number(False)
+        fKr = Kr.polynomial()
+        if prime_check_after_constr(fKr, Krplus_pol, dKrplus, dk) == True:
+            print([pari.polredabs(Kr.polynomial()),Krplus_pol,poly_k,hKr,hKrplus,hk], ',')
             
-quadratic = k_tk3[500:len(k_tk3)]
+quadratic = k_tk1
 quartic = quartic8
 prep_list = make_list(quadratic,quartic)
 chunks_k = divide_into_chunks(prep_list,len(prep_list))
